@@ -31,7 +31,7 @@ let ob = function (subject) {
             keys.push(k);
           }
         }
-      } else if(type(subject) === 'object') {
+      } else {
         for(let k in subject) {
           keys.push(k);
         };
@@ -40,11 +40,12 @@ let ob = function (subject) {
       return uniques(keys);
     },
     many: (num = 2) => {
-      let arr;
+      let arr = [];
+
       if(type(subject) === 'array') {
         return subject;
-      } else if(type(subject) === 'object') {
-        for(let i = 0; i < num.length; i++){
+      } else {
+        for(let i = 0; i < num; i++){
           arr.push(subject);
         }
       }

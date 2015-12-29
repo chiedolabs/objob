@@ -36,4 +36,17 @@ describe('Objob', () => {
       done();
     });
   });
+
+  describe('many', () => {
+    it('should return the correct number of objects', (done) => {
+      expect(ob(ob1).many()).to.deep.equal([ob1,ob1]);
+      expect(ob(ob1).many(5)).to.deep.equal([ob1,ob1,ob1,ob1,ob1]);
+      done();
+    });
+
+    it('should return the array if an array', (done) => {
+      expect(ob(obArr1).many()).to.equal(obArr1);
+      done();
+    });
+  });
 });
