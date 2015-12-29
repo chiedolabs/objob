@@ -13,11 +13,11 @@ let type = function(x) {
 /**
  * Returns an objob object
  *
- * @param {(object|object[])} x the multiline string
+ * @param {(object|object[])} subject
  * @returns {(object|object[])}
  */
-let ob = function (x) {
-  if(type(x) !== 'array' && type(x) !== 'object') {
+let ob = function (subject) {
+  if(type(subject) !== 'array' && type(subject) !== 'object') {
     return undefined;
   }
 
@@ -25,21 +25,31 @@ let ob = function (x) {
     keys:() => {
       let keys = [];
 
-      if(type(x) === 'array') {
-        for(let i = 0; i < x.length; i++){
-          for(let k in x[i]) {
+      if(type(subject) === 'array') {
+        for(let i = 0; i < subject.length; i++){
+          for(let k in subject[i]) {
             keys.push(k);
           }
         }
-      } else if(type(x) === 'object') {
-        for(let k in x) {
+      } else if(type(subject) === 'object') {
+        for(let k in subject) {
           keys.push(k);
         };
       }
 
       return uniques(keys);
     },
-    many: () => {
+    many: (num = 2) => {
+      let arr;
+      if(type(subject) === 'array') {
+        return subject;
+      } else if(type(subject) === 'object') {
+        for(let i = 0; i < num.length; i++){
+          arr.push(subject);
+        }
+      }
+
+      return arr;
     },
     with: () => {
     },
