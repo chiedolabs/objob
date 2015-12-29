@@ -5,7 +5,8 @@
   "main": "lib/objob.js",
   "scripts": {
     "test": "mocha tests.js --compilers js:babel-core/register --reporter spec ",
-    "prepublish": "./node_modules/babel-cli/bin/babel.js -d lib src/"
+    "build": "./node_modules/babel-cli/bin/babel.js -d lib src/",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "Node",
