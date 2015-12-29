@@ -76,13 +76,15 @@ describe('Objob', () => {
 
   describe('without', () => {
     it('should return the object only without the given keys', (done) => {
-      expect(ob(ob1).without(['name'])).to.deep.equal({name: ob1.name});
-      expect(ob(ob2).without(['name', 'age'])).to.deep.equal({name: ob2.name, age: ob2.age});
+      expect(ob(ob1).without(['name'])).to.deep.equal({age: ob1.age, weight: ob1.weight});
+      expect(ob(ob2).without(['name', 'age'])).to.deep.equal({weight: ob2.weight, feet: ob2.feet});
       done();
     });
 
     it('should return an array of objects only without the given keys', (done) => {
-      expect(ob(obArr1).many()).to.equal(obArr1);
+      expect(ob(obArr1).without(['name', 'weight', 'feet']))
+      .to.deep.equal([{age: ob1.age},{age: ob2.age}]);
+
       done();
     });
   });

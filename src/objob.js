@@ -91,28 +91,25 @@ let ob = function (subject) {
 
       return resp;
     },
-    without:(keys = []) => {
-      let resp;
+    without: function(keys = []){
+      let allKeys = this.keys(subject);
+      let keysToKeep = [];
 
-      if(type(subject) === 'array') {
-        resp = [];
-        console.log('yo');
-        console.log(this.keys);
-        for (let key of keys) {
-          for(let i in subject) {
-            resp[i] = resp[i] || resp;
-            resp[i][key] = subject[key];
+      for( let subjectKey of allKeys ) {
+        let keepKey = true;
+
+        for( let keyToRemove of keys ){
+          if(subjectKey === keyToRemove){
+            keepKey = false;
           }
         }
-      } else {
-        resp = {};
 
-        for (let key of keys) {
-          resp[key] = subject[key];
+        if(keepKey){
+          keysToKeep.push(subjectKey);
         }
       }
 
-      return resp;
+      return this.with(keysToKeep);
     },
   };
 };
