@@ -21,18 +21,18 @@ describe('Objob', () => {
       weight: 170,
     };
 
-    obbArr1 = [ob1, ob2];
+    obArr1 = [ob1, ob2];
 
     done();
   });
 
   describe('keys', () => {
     it('should return all keys for an object', (done) => {
-      expect(ob(ob1).keys()).to.equal(['name','age', 'weight']);
+      expect(ob(ob1).keys()).to.include.members(['name','age', 'weight']);
       done();
     });
     it('should return all keys for an array', (done) => {
-      expect(ob(obArr1).keys()).to.equal(['name','age', 'weight']);
+      expect(ob(obArr1).keys()).to.include.members(['name','age', 'weight','feet']);
       done();
     });
   });
