@@ -85,6 +85,12 @@ describe('Objob', () => {
       done();
     });
 
+    it('should return the array only with the given keys using nested object', (done) => {
+      expect(ob([ob3, ob3]).with(['body.feet']))
+      .to.deep.equal([{body: {feet: ob3.body.feet}}, {body: {feet: ob3.body.feet}}]);
+      done();
+    });
+
     it('should return the object only with the given keys using nested array', (done) => {
       //expect(ob(ob3).with(['eyes.location'])).to.deep.equal({body: {feet: ob3.body.feet}});
       done();
