@@ -38,14 +38,12 @@ let ob = function (subject) {
   }
 
   return {
-    keys:() => {
+    keys:function() {
       let keys = [];
 
       if(type(subject) === 'array') {
-        for(let i in subject){
-          for(let k in subject[i]) {
-            keys.push(k);
-          }
+        for(let i of subject){
+          keys = keys.concat(ob(i).keys());
         }
       } else {
         for(let k in subject) {
