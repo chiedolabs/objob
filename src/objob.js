@@ -77,6 +77,29 @@ let ob = function (subject) {
 
         for (let key of keys) {
           for(let i in subject) {
+            resp[i] = resp[i] || {};
+            resp[i][key] = subject[i][key];
+          }
+        }
+      } else {
+        resp = {};
+
+        for (let key of keys) {
+          resp[key] = subject[key];
+        }
+      }
+
+      return resp;
+    },
+    without:(keys = []) => {
+      let resp;
+
+      if(type(subject) === 'array') {
+        resp = [];
+        console.log('yo');
+        console.log(this.keys);
+        for (let key of keys) {
+          for(let i in subject) {
             resp[i] = resp[i] || resp;
             resp[i][key] = subject[key];
           }
@@ -90,8 +113,6 @@ let ob = function (subject) {
       }
 
       return resp;
-    },
-    without:() => {
     },
   };
 };
