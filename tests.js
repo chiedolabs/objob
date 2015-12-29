@@ -37,6 +37,17 @@ describe('Objob', () => {
     });
   });
 
+  describe('values', () => {
+    it('should return all values for an object', (done) => {
+      expect(ob(ob1).values()).to.include.members([ob1.name, ob1.age, ob1.weight]);
+      done();
+    });
+    it('should return all values for an array', (done) => {
+      expect(ob(obArr1).values()).to.include.members([ob1.name, ob1.age, ob1.weight, ob2.feet]);
+      done();
+    });
+  });
+
   describe('many', () => {
     it('should return the correct number of objects', (done) => {
       expect(ob(ob1).many()).to.deep.equal([ob1,ob1]);
@@ -45,6 +56,19 @@ describe('Objob', () => {
     });
 
     it('should return the array if an array', (done) => {
+      expect(ob(obArr1).many()).to.equal(obArr1);
+      done();
+    });
+  });
+
+  describe('with', () => {
+    it('should return the object only with the given keys', (done) => {
+      expect(ob(ob1).with(['name'])).to.deep.equal({name: ob1.name});
+      expect(ob(ob2).with(['name', 'age'])).to.deep.equal({name: ob2.name, age: ob2.age});
+      done();
+    });
+
+    it('should return an array of objects only with the given keys', (done) => {
       expect(ob(obArr1).many()).to.equal(obArr1);
       done();
     });

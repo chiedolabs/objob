@@ -26,7 +26,7 @@ let ob = function (subject) {
       let keys = [];
 
       if(type(subject) === 'array') {
-        for(let i = 0; i < subject.length; i++){
+        for(let i in subject){
           for(let k in subject[i]) {
             keys.push(k);
           }
@@ -38,6 +38,23 @@ let ob = function (subject) {
       }
 
       return uniques(keys);
+    },
+    values:() => {
+      let values = [];
+
+      if(type(subject) === 'array') {
+        for(let i in subject){
+          for(let k in subject[i]) {
+            values.push(subject[i][k]);
+          }
+        }
+      } else {
+        for(let k in subject) {
+          values.push(subject[k]);
+        };
+      }
+
+      return uniques(values);
     },
     many: (num = 2) => {
       let arr = [];
