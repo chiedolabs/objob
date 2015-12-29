@@ -52,7 +52,27 @@ let ob = function (subject) {
 
       return arr;
     },
-    with: () => {
+    with: (keys = []) => {
+      let resp;
+
+      if(type(subject) === 'array') {
+        resp = [];
+
+        for (let key of keys) {
+          for(let i in subject) {
+            resp[i] = resp[i] || resp;
+            resp[i][key] = subject[key];
+          }
+        }
+      } else {
+        resp = {};
+
+        for (let key of keys) {
+          resp[key] = subject[key];
+        }
+      }
+
+      return resp;
     },
     without:() => {
     },
