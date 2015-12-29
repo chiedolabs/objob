@@ -129,4 +129,6 @@ let ob = function (subject) {
   };
 };
 
-export default ob;
+if (typeof module !== 'undefined') {
+  module.exports = ob;
+}
