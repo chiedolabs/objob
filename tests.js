@@ -6,6 +6,7 @@ import ob from './src/objob';
 describe('Objob', () => {
   let ob1;
   let ob2;
+  let ob3;
   let obArr1;
 
   before((done) => {
@@ -19,6 +20,17 @@ describe('Objob', () => {
       name: 'Bob',
       feet: 5,
       weight: 170,
+    };
+
+    ob3 = {
+      name: 'Bob',
+      feet: 5,
+      body: {
+        feet: {
+          toes: 2,
+        },
+      },
+      eyes: [{location: 'left', color: 'blue'}, {location: 'right', color: 'red'}],
     };
 
     obArr1 = [ob1, ob2];
@@ -65,6 +77,16 @@ describe('Objob', () => {
     it('should return the object only with the given keys', (done) => {
       expect(ob(ob1).with(['name'])).to.deep.equal({name: ob1.name});
       expect(ob(ob2).with(['name', 'age'])).to.deep.equal({name: ob2.name, age: ob2.age});
+      done();
+    });
+
+    it('should return the object only with the given keys using nested object', (done) => {
+      //expect(ob(ob3).with(['body.feet'])).to.deep.equal({body: {feet: ob3.body.feet}});
+      done();
+    });
+
+    it('should return the object only with the given keys using nested array', (done) => {
+      //expect(ob(ob3).with(['eyes.location'])).to.deep.equal({body: {feet: ob3.body.feet}});
       done();
     });
 
