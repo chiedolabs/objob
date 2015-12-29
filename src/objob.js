@@ -10,14 +10,14 @@ let type = function(x) {
   }
 };
 
-let nestedMatch = function(ob, key) {
+let getNestedObject = function(ob, key) {
   let keys = key.split('.');
   let newOb = {};
 
   if(keys.length > 1) {
     // Get the key without the fist word separated by a period
     let newKey = key.replace(/^(\w|\di|_|$)*./g, '');
-    newOb[keys[0]] = nestedMatch(ob[keys[0]], newKey);
+    newOb[keys[0]] = getNestedObject(ob[keys[0]], newKey);
 
   } else {
     newOb[key] = ob[key];
@@ -97,7 +97,7 @@ let ob = function (subject) {
           if(key.split('.').length > 1) {
             let searchKey = key.replace(/^(\w|\di|_|$)*./g, '');
             let currentKey = key.replace('.'+searchKey, '');
-            resp[currentKey] = nestedMatch(subject[currentKey], searchKey);
+            resp[currentKey] = getNestedObject(subject[currentKey], searchKey);
           } else {
             resp[key] = subject[key];
           }
