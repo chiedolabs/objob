@@ -87,11 +87,8 @@ let ob = function (subject) {
       if(type(subject) === 'array') {
         resp = [];
 
-        for (let key of keys) {
-          for(let i in subject) {
-            resp[i] = resp[i] || {};
-            resp[i][key] = subject[i][key];
-          }
+        for(let i of subject){
+          resp = resp.concat(ob(i).with(keys));
         }
       } else {
         resp = {};
