@@ -88,4 +88,16 @@ describe('Objob', () => {
       done();
     });
   });
+
+  describe('Chaining', () => {
+    it('should return many of an object after filtering with with', (done) => {
+      expect(ob(ob(ob1).with(['name', 'age'])).many(3))
+      .to.deep.equal([
+        {age: ob1.age, name: ob1.name},
+        {age: ob1.age, name: ob1.name},
+        {age: ob1.age, name: ob1.name},
+      ]);
+      done();
+    });
+  });
 });
