@@ -57,10 +57,8 @@ let ob = function (subject) {
       let values = [];
 
       if(type(subject) === 'array') {
-        for(let i in subject){
-          for(let k in subject[i]) {
-            values.push(subject[i][k]);
-          }
+        for(let i of subject){
+          values = values.concat(ob(i).values());
         }
       } else {
         for(let k in subject) {
