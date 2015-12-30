@@ -73,39 +73,39 @@ describe('Objob', () => {
     });
   });
 
-  describe('with', () => {
-    it('should return the object only with the given keys', (done) => {
-      expect(ob(ob1).with(['name'])).to.deep.equal({name: ob1.name});
-      expect(ob(ob2).with(['name', 'age'])).to.deep.equal({name: ob2.name, age: ob2.age});
+  describe('select', () => {
+    it('should return the object only select the given keys', (done) => {
+      expect(ob(ob1).select(['name'])).to.deep.equal({name: ob1.name});
+      expect(ob(ob2).select(['name', 'age'])).to.deep.equal({name: ob2.name, age: ob2.age});
       done();
     });
 
-    it('should return the object only with the given keys using nested object', (done) => {
-      expect(ob(ob3).with(['body.feet'])).to.deep.equal({body: {feet: ob3.body.feet}});
+    it('should return the object only select the given keys using nested object', (done) => {
+      expect(ob(ob3).select(['body.feet'])).to.deep.equal({body: {feet: ob3.body.feet}});
       done();
     });
 
-    it('should return the array only with the given keys using nested object', (done) => {
-      expect(ob([ob3, ob3]).with(['body.feet']))
+    it('should return the array only select the given keys using nested object', (done) => {
+      expect(ob([ob3, ob3]).select(['body.feet']))
       .to.deep.equal([{body: {feet: ob3.body.feet}}, {body: {feet: ob3.body.feet}}]);
       done();
     });
 
-    it('should return an array of objects only with the given keys', (done) => {
-      expect(ob(obArr1).with(['name'])).to.deep.equal([{name: ob1.name},{name: ob2.name}]);
+    it('should return an array of objects only select the given keys', (done) => {
+      expect(ob(obArr1).select(['name'])).to.deep.equal([{name: ob1.name},{name: ob2.name}]);
       done();
     });
   });
 
-  describe('without', () => {
-    it('should return the object only without the given keys', (done) => {
-      expect(ob(ob1).without(['name'])).to.deep.equal({age: ob1.age, weight: ob1.weight});
-      expect(ob(ob2).without(['name', 'age'])).to.deep.equal({weight: ob2.weight, feet: ob2.feet});
+  describe('deselect', () => {
+    it('should return the object only deselect the given keys', (done) => {
+      expect(ob(ob1).deselect(['name'])).to.deep.equal({age: ob1.age, weight: ob1.weight});
+      expect(ob(ob2).deselect(['name', 'age'])).to.deep.equal({weight: ob2.weight, feet: ob2.feet});
       done();
     });
 
-    it('should return an array of objects only without the given keys', (done) => {
-      expect(ob(obArr1).without(['name', 'weight', 'feet']))
+    it('should return an array of objects only deselect the given keys', (done) => {
+      expect(ob(obArr1).deselect(['name', 'weight', 'feet']))
       .to.deep.equal([{age: ob1.age},{age: ob2.age}]);
 
       done();
@@ -113,8 +113,8 @@ describe('Objob', () => {
   });
 
   describe('Chaining', () => {
-    it('should return many of an object after filtering with with', (done) => {
-      expect(ob(ob(ob1).with(['name', 'age'])).many(3))
+    it('should return many of an object after filtering select select', (done) => {
+      expect(ob(ob(ob1).select(['name', 'age'])).many(3))
       .to.deep.equal([
         {age: ob1.age, name: ob1.name},
         {age: ob1.age, name: ob1.name},

@@ -15,7 +15,7 @@ let getNestedObject = function(ob, key) {
   let newOb = {};
 
   if(keys.length > 1) {
-    // Get the key without the fist word separated by a period
+    // Get the key deselect the fist word separated by a period
     let newKey = key.replace(/^(\w|\di|_|$)*./g, '');
     newOb[keys[0]] = getNestedObject(ob[keys[0]], newKey);
 
@@ -81,14 +81,14 @@ let ob = function (subject) {
 
       return arr;
     },
-    with: (keys = []) => {
+    select: (keys = []) => {
       let resp;
 
       if(type(subject) === 'array') {
         resp = [];
 
         for(let i of subject){
-          resp = resp.concat(ob(i).with(keys));
+          resp = resp.concat(ob(i).select(keys));
         }
       } else {
         resp = {};
@@ -106,7 +106,7 @@ let ob = function (subject) {
 
       return resp;
     },
-    without: function(keys = []){
+    deselect: function(keys = []){
       let allKeys = this.keys(subject);
       let keysToKeep = [];
 
@@ -124,7 +124,7 @@ let ob = function (subject) {
         }
       }
 
-      return this.with(keysToKeep);
+      return this.select(keysToKeep);
     },
   };
 };
