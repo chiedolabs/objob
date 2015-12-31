@@ -112,6 +112,48 @@ describe('Objob', () => {
     });
   });
 
+  describe('flatten', () => {
+    it('should return the flattened object', (done) => {
+      expect(ob(ob3).flatten()).to.deep.equal({
+        name: 'Bob',
+        feet: 5,
+        body: {
+          feet: {
+            toes: 2,
+          },
+        },
+        'body.feet': {toes: 2},
+        'body.feet.toes': 2,
+        'eyes[]': [{location: 'left', color: 'blue'}, {location: 'right', color: 'red'}],
+        'eyes[].0': {location: 'left', color: 'blue'},
+        'eyes[].1': {location: 'right', color: 'red'},
+        'eyes[].0.location': 'left',
+        'eyes[].1.location': 'right',
+        'eyes[].0.color': 'blue',
+        'eyes[].1.color': 'red',
+      });
+      done();
+    });
+
+    it('should return the flattened shallow object', (done) => {
+      expect(ob(ob3).flatten('', true)).to.deep.equal({
+        name: 'Bob',
+        feet: 5,
+        body: {
+          feet: {
+            toes: 2,
+          },
+        },
+        'body.feet': {toes: 2},
+        'body.feet.toes': 2,
+        'eyes[]': [{location: 'left', color: 'blue'}, {location: 'right', color: 'red'}],
+        'eyes[].location': 'left',
+        'eyes[].color': 'blue',
+      });
+      done();
+    });
+  });
+
   describe('Chaining', () => {
     it('should return many of an object after filtering select select', (done) => {
       expect(ob(ob(ob1).select(['name', 'age'])).many(3))

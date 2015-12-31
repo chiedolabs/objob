@@ -7,6 +7,8 @@ let type = function(x) {
     return 'array';
   } else if(typeof x === 'object') {
     return 'object';
+  } else {
+    return typeof x;
   }
 };
 
@@ -33,9 +35,6 @@ let getNestedObject = function(ob, key) {
  * @returns {(object|object[])}
  */
 let ob = function (subject) {
-  if(type(subject) !== 'array' && type(subject) !== 'object') {
-    return undefined;
-  }
 
   return {
     keys:function() {
@@ -125,6 +124,35 @@ let ob = function (subject) {
       }
 
       return this.select(keysToKeep);
+    },
+    flatten: function(prefix='', shallow=false){
+      let res = {};
+
+      if(type(subject) === 'object' || type(subject) === 'array'){
+
+        for(let i in subject) {
+          let tmpPrefix;
+          if(prefix === '') {
+            tmpPrefix = `${i}`;
+          } else {
+            tmpPrefix = `${prefix}.${i}`;
+          }
+
+          if(type(subject[i]) === 'array') {
+            tmpPrefix = tmpPrefix + '[]';
+          }
+
+          res[tmpPrefix] = subject[i];
+
+          if(type(subject[i]) === 'array' && shallow) {
+            res = {...res, ...ob(subject[i][0]).flatten(tmpPrefix, shallow)};
+          } else {
+            res = {...res, ...ob(subject[i]).flatten(tmpPrefix, shallow)};
+          }
+        }
+      }
+
+      return res;
     },
   };
 };
