@@ -57,6 +57,36 @@ let ob = function (subject) {
 
       return this.select(keysToKeep);
     },
+    expand: function(){
+      let res = {};
+
+      // Get the empty object ready for the data
+      for(let keyChain in subject){
+        let subkeys = keyChain.split('.');
+        let tmp = {};
+        let obj = tmp;
+
+        let count = 1;
+        for(let subkey of subkeys) {
+          // Set the value if the end of the keys
+          if(count === subkeys.length) {
+            tmp[subkey.replace(/\[\]/g, '')] = subject[keyChain];
+          } else {
+            // If array create the array, else create the object
+            if(subkey.indexOf('[]') !== -1){
+              subkey = subkey.replace(/\[\]/g, '');
+              tmp[subkey] = [];
+            } else {
+              tmp[subkey] = {};
+            }
+            tmp = tmp[subkey];
+            count++;
+          }
+        }
+        res = {...obj, ...res};
+      }
+      return res;
+    },
     flatten: function(prefix='', shallow=false){
       let res = {};
 

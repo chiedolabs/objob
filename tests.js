@@ -4,9 +4,7 @@ import { expect } from 'chai';
 import ob from './src/objob';
 
 describe('Objob', () => {
-  let ob1;
-  let ob2;
-  let ob3;
+  let ob1, ob2, ob3, ob4;
   let obArr1;
 
   before((done) => {
@@ -28,6 +26,18 @@ describe('Objob', () => {
       body: {
         feet: {
           toes: 2,
+        },
+      },
+      eyes: [{location: 'left', color: 'blue'}, {location: 'right', color: 'red'}],
+    };
+
+    ob4 = {
+      name: 'Bob',
+      feet: 5,
+      body: {
+        feet: {
+          toes: [1,2,10],
+          heels: [{number: 1},{number: 7},{number: 8}],
         },
       },
       eyes: [{location: 'left', color: 'blue'}, {location: 'right', color: 'red'}],
@@ -150,6 +160,15 @@ describe('Objob', () => {
         'eyes[].location': 'left',
         'eyes[].color': 'blue',
       });
+      done();
+    });
+  });
+
+  describe('expand', () => {
+    it('should return the expanded object', (done) => {
+      expect(ob(ob(ob3).flatten()).expand()).to.deep.equal(ob3);
+      expect(ob(ob(ob2).flatten()).expand()).to.deep.equal(ob2);
+      expect(ob(ob(ob4).flatten()).expand()).to.deep.equal(ob4);
       done();
     });
   });
