@@ -136,7 +136,6 @@ let ob = function (subject) {
           }
         }
       }
-
       return res;
     },
     keys:function() {

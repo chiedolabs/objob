@@ -142,6 +142,7 @@ describe('Objob', () => {
         'eyes[].0.color': 'blue',
         'eyes[].1.color': 'red',
       });
+      expect(ob(ob1).flatten()).to.deep.equal(ob1);
       done();
     });
 
