@@ -84,8 +84,15 @@ let ob = function (subject) {
           let count = 1;
           for(let subkey of subkeys) {
             // Set the value if the end of the keys
-            if(count === subkeys.length) {
-              tmp[subkey.replace(/\[\]/g, '')] = subject[keyChain];
+            console.log('Line');
+            console.log(tmp);
+            console.log(count);
+            console.log(subkeys.length);
+            if(count === subkeys.length && type(tmp) === 'object') {
+              subkey = subkey.replace(/\[\]/g, '');
+              tmp[subkey] = subject[keyChain];
+            } else if(type(tmp) === 'array') {
+              tmp[subkey] = subject[keyChain];
             } else {
               // If array create the array, else create the object
               if(subkey.indexOf('[]') !== -1){
@@ -95,22 +102,15 @@ let ob = function (subject) {
                 tmp[subkey] = {};
               }
               tmp = tmp[subkey];
-              count++;
             }
-          }
-
-          for (let i in obj) {
-            if (obj[i] === null || obj[i] === undefined) {
-              delete obj[i];
-            }
+            count++;
           }
 
           // TODO: Figure out how to make the data ony do a shallow copy.
           // Right now, body is copying all the data for body.feet for example.
           // I only really want one level of information from each key. The rest can be
           // discarded
-          console.dir(obj);
-          res = {...obj, ...res};
+          res = {...res, ...obj};
         }
       }
       return res;
