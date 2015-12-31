@@ -17,6 +17,7 @@ describe('Objob', () => {
     ob2 = {
       name: 'Bob',
       feet: 5,
+      age: 100,
       weight: 170,
     };
 
@@ -116,7 +117,7 @@ describe('Objob', () => {
 
     it('should return an array of objects only deselect the given keys', (done) => {
       expect(ob(obArr1).deselect(['name', 'weight', 'feet']))
-      .to.deep.equal([{age: ob1.age},{age: ob2.age}]);
+      .to.deep.equal([{age: ob1.age}, {age: ob2.age}]);
 
       done();
     });

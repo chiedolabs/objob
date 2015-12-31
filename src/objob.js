@@ -12,22 +12,6 @@ let type = function(x) {
   }
 };
 
-let getNestedObject = function(ob, key) {
-  let keys = key.split('.');
-  let newOb = {};
-
-  if(keys.length > 1) {
-    // Get the key deselect the fist word separated by a period
-    let newKey = key.replace(/^(\w|\di|_|$)*./g, '');
-    newOb[keys[0]] = getNestedObject(ob[keys[0]], newKey);
-
-  } else {
-    newOb[key] = ob[key];
-  }
-
-  return newOb;
-};
-
 /**
  * Returns an objob object
  *
@@ -38,7 +22,7 @@ let ob = function (subject) {
 
   return {
     deselect: function(keys = []){
-      let allKeys = this.keys(subject);
+      let allKeys = ob(subject).keys();
       let keysToKeep = [];
 
       for( let subjectKey of allKeys ) {
@@ -54,7 +38,7 @@ let ob = function (subject) {
           keysToKeep.push(subjectKey);
         }
       }
-
+      console.log(keysToKeep);
       return this.select(keysToKeep);
     },
     expand: function(){
@@ -91,6 +75,12 @@ let ob = function (subject) {
               }
               tmp = tmp[subkey];
               count++;
+            }
+          }
+
+          for (let i in obj) {
+            if (obj[i] === null || obj[i] === undefined) {
+              delete obj[i];
             }
           }
           res = {...obj, ...res};
@@ -178,15 +168,16 @@ let ob = function (subject) {
       } else {
         resp = {};
 
-        for (let key of keys) {
-          if(key.split('.').length > 1) {
-            let searchKey = key.replace(/^(\w|\di|_|$)*./g, '');
-            let currentKey = key.replace('.'+searchKey, '');
-            resp[currentKey] = getNestedObject(subject[currentKey], searchKey);
-          } else {
-            resp[key] = subject[key];
+        let flat = ob(subject).flatten();
+
+        for (let actualKey in flat){
+          for (let desiredKey of keys){
+            if(actualKey === desiredKey) {
+              resp[actualKey] = flat[actualKey];
+            }
           }
         }
+        resp = ob(resp).expand();
       }
 
       return resp;
