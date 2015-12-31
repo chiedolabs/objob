@@ -12,6 +12,25 @@ let type = function(x) {
   }
 };
 
+let makeShallow = (subject) => {
+  let resp = {};
+
+  for(let keyChain in subject){
+    let shallow = false;
+
+    for(let keyChain2 in subject){
+      if(keyChain !== keyChain2 && keyChain2.indexOf(keyChain) === 0) {
+        shallow = true;
+      }
+    }
+
+    if(!shallow) {
+      resp[keyChain] = subject[keyChain];
+    }
+  }
+  return resp;
+};
+
 /**
  * Returns an objob object
  *
@@ -53,9 +72,11 @@ let ob = function (subject) {
 
         return res;
       } else {
+        subject = makeShallow(subject);
 
         // Get the empty object ready for the data
         for(let keyChain in subject){
+
           let subkeys = keyChain.split('.');
           let tmp = {};
           let obj = tmp;
@@ -88,6 +109,7 @@ let ob = function (subject) {
           // Right now, body is copying all the data for body.feet for example.
           // I only really want one level of information from each key. The rest can be
           // discarded
+          console.dir(obj);
           res = {...obj, ...res};
         }
       }
@@ -186,6 +208,12 @@ let ob = function (subject) {
       }
 
       return resp;
+    },
+    shallow: () => {
+      let x = ob(subject).flatten();
+      x = makeShallow(x);
+
+      return ob(x).expand();
     },
     values:() => {
       let values = [];
