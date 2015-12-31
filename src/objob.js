@@ -37,74 +37,6 @@ let getNestedObject = function(ob, key) {
 let ob = function (subject) {
 
   return {
-    keys:function() {
-      let keys = [];
-
-      if(type(subject) === 'array') {
-        for(let i of subject){
-          keys = keys.concat(ob(i).keys());
-        }
-      } else {
-        for(let k in subject) {
-          keys.push(k);
-        };
-      }
-
-      return uniques(keys);
-    },
-    values:() => {
-      let values = [];
-
-      if(type(subject) === 'array') {
-        for(let i of subject){
-          values = values.concat(ob(i).values());
-        }
-      } else {
-        for(let k in subject) {
-          values.push(subject[k]);
-        };
-      }
-
-      return uniques(values);
-    },
-    many: (num = 2) => {
-      let arr = [];
-
-      if(type(subject) === 'array') {
-        return subject;
-      } else {
-        for(let i = 0; i < num; i++){
-          arr.push(subject);
-        }
-      }
-
-      return arr;
-    },
-    select: (keys = []) => {
-      let resp;
-
-      if(type(subject) === 'array') {
-        resp = [];
-
-        for(let i of subject){
-          resp = resp.concat(ob(i).select(keys));
-        }
-      } else {
-        resp = {};
-
-        for (let key of keys) {
-          if(key.split('.').length > 1) {
-            let searchKey = key.replace(/^(\w|\di|_|$)*./g, '');
-            let currentKey = key.replace('.'+searchKey, '');
-            resp[currentKey] = getNestedObject(subject[currentKey], searchKey);
-          } else {
-            resp[key] = subject[key];
-          }
-        }
-      }
-
-      return resp;
-    },
     deselect: function(keys = []){
       let allKeys = this.keys(subject);
       let keysToKeep = [];
@@ -153,6 +85,74 @@ let ob = function (subject) {
       }
 
       return res;
+    },
+    keys:function() {
+      let keys = [];
+
+      if(type(subject) === 'array') {
+        for(let i of subject){
+          keys = keys.concat(ob(i).keys());
+        }
+      } else {
+        for(let k in subject) {
+          keys.push(k);
+        };
+      }
+
+      return uniques(keys);
+    },
+    many: (num = 2) => {
+      let arr = [];
+
+      if(type(subject) === 'array') {
+        return subject;
+      } else {
+        for(let i = 0; i < num; i++){
+          arr.push(subject);
+        }
+      }
+
+      return arr;
+    },
+    select: (keys = []) => {
+      let resp;
+
+      if(type(subject) === 'array') {
+        resp = [];
+
+        for(let i of subject){
+          resp = resp.concat(ob(i).select(keys));
+        }
+      } else {
+        resp = {};
+
+        for (let key of keys) {
+          if(key.split('.').length > 1) {
+            let searchKey = key.replace(/^(\w|\di|_|$)*./g, '');
+            let currentKey = key.replace('.'+searchKey, '');
+            resp[currentKey] = getNestedObject(subject[currentKey], searchKey);
+          } else {
+            resp[key] = subject[key];
+          }
+        }
+      }
+
+      return resp;
+    },
+    values:() => {
+      let values = [];
+
+      if(type(subject) === 'array') {
+        for(let i of subject){
+          values = values.concat(ob(i).values());
+        }
+      } else {
+        for(let k in subject) {
+          values.push(subject[k]);
+        };
+      }
+
+      return uniques(values);
     },
   };
 };
