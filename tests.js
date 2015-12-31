@@ -116,6 +116,17 @@ describe('Objob', () => {
       expect(ob(ob1).deselect(['name'])).to.deep.equal({age: ob1.age, weight: ob1.weight});
       expect(ob(ob2).deselect(['name', 'age'])).to.deep.equal({weight: ob2.weight, feet: ob2.feet});
       done();
+
+      expect(ob(ob3).deselect(['eyes[].0.location'])).to.deep.equal({
+        name: ob3.name,
+        feet: ob3.feet,
+        body: {
+          feet: {
+            toes: ob3.body.feet.toes,
+          },
+        },
+        eyes: [{color: 'blue'}, ob3.eyes[1]],
+      });
     });
 
     it('should return an array of objects only deselect the given keys', (done) => {

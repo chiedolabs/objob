@@ -22,7 +22,7 @@ let ob = function (subject) {
 
   return {
     deselect: function(keys = []){
-      let allKeys = ob(subject).keys();
+      let allKeys = ob(ob(subject).flatten()).keys();
       let keysToKeep = [];
 
       for( let subjectKey of allKeys ) {
@@ -38,7 +38,8 @@ let ob = function (subject) {
           keysToKeep.push(subjectKey);
         }
       }
-      return this.select(keysToKeep);
+
+      return ob(subject).select(keysToKeep);
     },
     expand: function(){
       let res;
