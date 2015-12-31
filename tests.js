@@ -88,6 +88,9 @@ describe('Objob', () => {
     it('should return the object only select the given keys', (done) => {
       expect(ob(ob1).select(['name'])).to.deep.equal({name: ob1.name});
       expect(ob(ob2).select(['name', 'age'])).to.deep.equal({name: ob2.name, age: ob2.age});
+      expect(ob(ob3).select(['eyes[].0.location'])).to.deep.equal({
+        eyes: [{location: 'left'}],
+      });
       done();
     });
 

@@ -38,7 +38,6 @@ let ob = function (subject) {
           keysToKeep.push(subjectKey);
         }
       }
-      console.log(keysToKeep);
       return this.select(keysToKeep);
     },
     expand: function(){
