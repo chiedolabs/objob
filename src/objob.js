@@ -61,6 +61,7 @@ let ob = function (subject) {
       return ob(subject).select(keysToKeep);
     },
     expand: function(){
+      //TODO - total rewrite
       let res;
 
       if(type(subject) === 'array') {
@@ -84,14 +85,11 @@ let ob = function (subject) {
           let count = 1;
           for(let subkey of subkeys) {
             // Set the value if the end of the keys
-            console.log('Line');
-            console.log(tmp);
-            console.log(count);
-            console.log(subkeys.length);
             if(count === subkeys.length && type(tmp) === 'object') {
               subkey = subkey.replace(/\[\]/g, '');
               tmp[subkey] = subject[keyChain];
             } else if(type(tmp) === 'array') {
+              // CONTINUE HERE. Something is going wrong with arrays
               tmp[subkey] = subject[keyChain];
             } else {
               // If array create the array, else create the object
@@ -105,11 +103,6 @@ let ob = function (subject) {
             }
             count++;
           }
-
-          // TODO: Figure out how to make the data ony do a shallow copy.
-          // Right now, body is copying all the data for body.feet for example.
-          // I only really want one level of information from each key. The rest can be
-          // discarded
           res = {...res, ...obj};
         }
       }
