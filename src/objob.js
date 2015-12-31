@@ -83,6 +83,11 @@ let ob = function (subject) {
               delete obj[i];
             }
           }
+
+          // TODO: Figure out how to make the data ony do a shallow copy.
+          // Right now, body is copying all the data for body.feet for example.
+          // I only really want one level of information from each key. The rest can be
+          // discarded
           res = {...obj, ...res};
         }
       }
