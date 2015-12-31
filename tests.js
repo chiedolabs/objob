@@ -169,6 +169,7 @@ describe('Objob', () => {
       expect(ob(ob(ob3).flatten()).expand()).to.deep.equal(ob3);
       expect(ob(ob(ob2).flatten()).expand()).to.deep.equal(ob2);
       expect(ob(ob(ob4).flatten()).expand()).to.deep.equal(ob4);
+      expect(ob(ob(obArr1).flatten()).expand()).to.deep.equal(obArr1);
       done();
     });
   });

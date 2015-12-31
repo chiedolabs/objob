@@ -58,58 +58,81 @@ let ob = function (subject) {
       return this.select(keysToKeep);
     },
     expand: function(){
-      let res = {};
+      let res;
 
-      // Get the empty object ready for the data
-      for(let keyChain in subject){
-        let subkeys = keyChain.split('.');
-        let tmp = {};
-        let obj = tmp;
+      if(type(subject) === 'array') {
+        res = [];
 
-        let count = 1;
-        for(let subkey of subkeys) {
-          // Set the value if the end of the keys
-          if(count === subkeys.length) {
-            tmp[subkey.replace(/\[\]/g, '')] = subject[keyChain];
-          } else {
-            // If array create the array, else create the object
-            if(subkey.indexOf('[]') !== -1){
-              subkey = subkey.replace(/\[\]/g, '');
-              tmp[subkey] = [];
-            } else {
-              tmp[subkey] = {};
-            }
-            tmp = tmp[subkey];
-            count++;
-          }
+        for(let i of subject){
+          res = res.concat(ob(i).expand());
         }
-        res = {...obj, ...res};
+
+        return res;
+      } else {
+
+        // Get the empty object ready for the data
+        for(let keyChain in subject){
+          let subkeys = keyChain.split('.');
+          let tmp = {};
+          let obj = tmp;
+
+          let count = 1;
+          for(let subkey of subkeys) {
+            // Set the value if the end of the keys
+            if(count === subkeys.length) {
+              tmp[subkey.replace(/\[\]/g, '')] = subject[keyChain];
+            } else {
+              // If array create the array, else create the object
+              if(subkey.indexOf('[]') !== -1){
+                subkey = subkey.replace(/\[\]/g, '');
+                tmp[subkey] = [];
+              } else {
+                tmp[subkey] = {};
+              }
+              tmp = tmp[subkey];
+              count++;
+            }
+          }
+          res = {...obj, ...res};
+        }
       }
       return res;
     },
-    flatten: function(prefix='', shallow=false){
-      let res = {};
+    flatten: function(prefix='', shallow=false, counter = 0){
+      let res;
 
-      if(type(subject) === 'object' || type(subject) === 'array'){
+      if(type(subject) === 'array' && counter === 0) {
+        res = [];
 
-        for(let i in subject) {
-          let tmpPrefix;
-          if(prefix === '') {
-            tmpPrefix = `${i}`;
-          } else {
-            tmpPrefix = `${prefix}.${i}`;
-          }
+        for(let i of subject){
+          res = res.concat(ob(i).flatten(prefix, shallow, counter++));
+        }
 
-          if(type(subject[i]) === 'array') {
-            tmpPrefix = tmpPrefix + '[]';
-          }
+        return res;
+      } else {
+        res = {};
 
-          res[tmpPrefix] = subject[i];
+        if(type(subject) === 'object' || type(subject) === 'array'){
 
-          if(type(subject[i]) === 'array' && shallow) {
-            res = {...res, ...ob(subject[i][0]).flatten(tmpPrefix, shallow)};
-          } else {
-            res = {...res, ...ob(subject[i]).flatten(tmpPrefix, shallow)};
+          for(let i in subject) {
+            let tmpPrefix;
+            if(prefix === '') {
+              tmpPrefix = `${i}`;
+            } else {
+              tmpPrefix = `${prefix}.${i}`;
+            }
+
+            if(type(subject[i]) === 'array') {
+              tmpPrefix = tmpPrefix + '[]';
+            }
+
+            res[tmpPrefix] = subject[i];
+
+            if(type(subject[i]) === 'array' && shallow) {
+              res = {...res, ...ob(subject[i][0]).flatten(tmpPrefix, shallow, counter++)};
+            } else {
+              res = {...res, ...ob(subject[i]).flatten(tmpPrefix, shallow, counter++)};
+            }
           }
         }
       }
