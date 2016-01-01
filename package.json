@@ -19,8 +19,9 @@
     "url": "https://github.com/chiedolabs/objob.git"
   },
   "dependencies": {
-    "uniques": "0.0.1",
-    "type-of": "^2.0.1"
+    "string-contains": "^0.1.0",
+    "type-of": "^2.0.1",
+    "uniques": "0.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.3.17",

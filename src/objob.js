@@ -2,6 +2,7 @@
 
 import uniques from 'uniques';
 import type from 'type-of';
+import contains from 'string-contains';
 
 let makeShallow = (subject) => {
   let resp = {};
@@ -52,51 +53,68 @@ let ob = function (subject) {
       return ob(subject).select(keysToKeep);
     },
     expand: function(){
-      //TODO - total rewrite
       let res;
+
+      subject = makeShallow(subject);
 
       if(type(subject) === 'array') {
         res = [];
-
-        for(let i of subject){
-          res = res.concat(ob(i).expand());
+        for(let i in subject) {
+          res.push(subject[i]);
         }
+      } else if(type(subject)) {
+        let keyChains =  ob(subject).keys();
 
-        return res;
-      } else {
-        subject = makeShallow(subject);
-
-        // Get the empty object ready for the data
-        for(let keyChain in subject){
-
-          let subkeys = keyChain.split('.');
+        // When the object is just {'example.example': y}
+        // One key and one value
+        if(keyChains.length === 1) {
           let tmp = {};
-          let obj = tmp;
+          let keyChain = keyChains[0]; // something like 'first.another.another'
+          let value = subject[keyChain];
+          let count;
 
-          let count = 1;
-          for(let subkey of subkeys) {
-            // Set the value if the end of the keys
-            if(count === subkeys.length && type(tmp) === 'object') {
-              subkey = subkey.replace(/\[\]/g, '');
-              tmp[subkey] = subject[keyChain];
-            } else if(type(tmp) === 'array') {
-              // CONTINUE HERE. Something is going wrong with arrays
-              tmp[subkey] = subject[keyChain];
-            } else {
-              // If array create the array, else create the object
-              if(subkey.indexOf('[]') !== -1){
-                subkey = subkey.replace(/\[\]/g, '');
-                tmp[subkey] = [];
+          res = tmp; // Poining to tmp so that we have a place holder before nesting
+          count = 1;
+          let keys = keyChain.split('.');
+          for(let key of keys) {
+            if(count === keys.length) {
+              // If we're at the last key, then set the value
+              if(type(tmp) === 'array') {
+                tmp.push(ob(value).expand());
               } else {
-                tmp[subkey] = {};
+                // May not even need the expand here
+                tmp[key] = value;
               }
-              tmp = tmp[subkey];
+            } else {
+              let isArray = contains(key, '[]');
+              if(isArray) {
+                key = key.replace('[]','');
+                tmp[key] = [];
+                tmp = tmp[key];
+              } else {
+                tmp[key] = {};
+                tmp = tmp[key];
+              }
             }
             count++;
           }
-          res = {...res, ...obj};
+
+        } else {
+          // If multiple keychains in the object, simplify our logic a bit
+          res = {};
+          for(let i in subject) {
+            let tmp = {};
+            tmp[i] = subject[i];
+            console.dir(res);
+            console.dir(ob(tmp).expand());
+            res = {...res, ...ob(tmp).expand()};
+          }
         }
+      } else {
+        // Base case
+        return subject;
       }
+
       return res;
     },
     flatten: function(prefix='', shallow=false, counter = 0){
