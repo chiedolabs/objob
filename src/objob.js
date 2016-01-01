@@ -258,18 +258,6 @@ let ob = function (subject) {
       return resp;
     },
     /*
-     * BETA: Return a shallow representaion of an object.
-     * Needs to be tested.
-     *
-     *  @returns {string[]}
-     */
-    shallow: () => {
-      let x = ob(subject).flatten();
-      x = makeFlattenedShallow(x);
-
-      return ob(x).expand();
-    },
-    /*
      * Returns all values for a given object or array as an array.
      *
      *  @returns {any[]}
