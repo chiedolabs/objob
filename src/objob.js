@@ -53,17 +53,27 @@ let ob = function (subject) {
 
       return ob(subject).select(keysToKeep);
     },
-    expand: function(){
+    expand: function(depth = 1){
       let res;
-
       subject = makeShallow(subject);
 
-      if(type(subject) === 'array') {
-        res = [];
-        for(let i in subject) {
-          res.push(subject[i]);
+      // Determine if an array is represented by the flattened object
+      let rootObjectPresent = true;
+      if(depth === 1) {
+        rootObjectPresent = false;
+        for(let key in subject) {
+          let rootArrayPresent = key.match(/^\d/ig);
+
+          rootObjectPresent = (rootObjectPresent || !rootArrayPresent);
         }
-      } else if(type(subject)) {
+      }
+
+      if(rootObjectPresent === false && depth === 1) {
+        res = [];
+        for(let key in subject) {
+          res.push(subject[key]);
+        }
+      } else {
         let keyChains =  ob(subject).keys();
 
         // When the object is just {'example.example': y}
@@ -100,14 +110,10 @@ let ob = function (subject) {
           for(let i in subject) {
             let tmp = {};
             tmp[i] = subject[i];
-            res = merge(res, ob(tmp).expand());
+            res = merge(res, ob(tmp).expand(++depth));
           }
         }
-      } else {
-        // Base case
-        return subject;
       }
-
       return res;
       //return ob(res).removeUndefs();
     },
