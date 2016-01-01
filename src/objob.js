@@ -15,6 +15,12 @@ import { makeFlattenedShallow } from './functions';
 let ob = function (subject) {
 
   return {
+    /*
+     *  Returns an object without the given keys.
+     *
+     *  @param {string[]} keys
+     *  @returns {object}
+     */
     deselect: function(keys = []){
       let allKeys = ob(ob(subject).flatten()).keys();
       let keysToKeep = [];
@@ -35,6 +41,12 @@ let ob = function (subject) {
 
       return ob(subject).select(keysToKeep);
     },
+    /*
+     *  Takes a flattened object or array and expands it back to a full object
+     *  or array.
+     *
+     *  @returns {object|object[]}
+     */
     expand: function(depth = 1){
       let res;
       subject = makeFlattenedShallow(subject);
@@ -99,6 +111,13 @@ let ob = function (subject) {
       return res;
       //return ob(res).removeUndefs();
     },
+    /*
+     *  Takes an object or array and return a flattened representation of that object or array
+     *  that has one level of depth. This allows you to do complex operations on your object
+     *  while it's in a format that's easier to work with.
+     *
+     *  @returns {object|object[]}
+     */
     flatten: function(prefix='', depth = 1){
       let res;
 
@@ -135,6 +154,11 @@ let ob = function (subject) {
       }
       return res;
     },
+    /*
+     * Return all keys for an object or all keys of each object in an array.
+     *
+     *  @returns {string[]}
+     */
     keys:function() {
       let keys = [];
 
@@ -150,6 +174,12 @@ let ob = function (subject) {
 
       return uniques(keys);
     },
+    /*
+     * Returns many of the object. If an array is used, it will just return
+     * the given array.
+     *
+     *  @returns {object[]}
+     */
     many: (num = 2) => {
       let arr = [];
 
@@ -163,6 +193,11 @@ let ob = function (subject) {
 
       return arr;
     },
+    /*
+     * Removes all keys with undefined values from an object or array
+     *
+     *  @returns {object|object[]}
+     */
     removeUndefs: () => {
       let res;
 
@@ -190,6 +225,12 @@ let ob = function (subject) {
 
       return res;
     },
+    /*
+     *  Returns an object only with the given keys.
+     *
+     *  @param {string[]} keys
+     *  @returns {object}
+     */
     select: (keys = []) => {
       let resp;
 
@@ -216,12 +257,23 @@ let ob = function (subject) {
 
       return resp;
     },
+    /*
+     * BETA: Return a shallow representaion of an object.
+     * Needs to be tested.
+     *
+     *  @returns {string[]}
+     */
     shallow: () => {
       let x = ob(subject).flatten();
       x = makeFlattenedShallow(x);
 
       return ob(x).expand();
     },
+    /*
+     * Returns all values for a given object or array as an array.
+     *
+     *  @returns {any[]}
+     */
     values:() => {
       let values = [];
 

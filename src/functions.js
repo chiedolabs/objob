@@ -1,3 +1,10 @@
+/*
+ *  Returns a shallow version of the shallow object to remove redundancy
+ *  and simplify complex operations.
+ *
+ *  @param {object} subject the flattened object to perform the operation on.
+ *  @returns {object}
+ */
 export let makeFlattenedShallow = (subject) => {
   let resp = {};
 
