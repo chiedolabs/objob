@@ -4,25 +4,7 @@ import uniques from 'uniques';
 import type from 'type-of';
 import contains from 'string-contains';
 import merge from 'deepmerge';
-
-let makeShallow = (subject) => {
-  let resp = {};
-
-  for(let keyChain in subject){
-    let shallow = false;
-
-    for(let keyChain2 in subject){
-      if(keyChain !== keyChain2 && keyChain2.indexOf(keyChain) === 0) {
-        shallow = true;
-      }
-    }
-
-    if(!shallow) {
-      resp[keyChain] = subject[keyChain];
-    }
-  }
-  return resp;
-};
+import { makeFlattenedShallow } from './functions';
 
 /**
  * Returns an objob object
@@ -55,7 +37,7 @@ let ob = function (subject) {
     },
     expand: function(depth = 1){
       let res;
-      subject = makeShallow(subject);
+      subject = makeFlattenedShallow(subject);
 
       // Determine if an array is represented by the flattened object
       let rootObjectPresent = true;
@@ -236,7 +218,7 @@ let ob = function (subject) {
     },
     shallow: () => {
       let x = ob(subject).flatten();
-      x = makeShallow(x);
+      x = makeFlattenedShallow(x);
 
       return ob(x).expand();
     },
