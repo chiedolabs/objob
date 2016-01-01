@@ -1,16 +1,7 @@
 'use strict';
 
 import uniques from 'uniques';
-
-let type = function(x) {
-  if( Object.prototype.toString.call(x) === '[object Array]' ) {
-    return 'array';
-  } else if(typeof x === 'object') {
-    return 'object';
-  } else {
-    return typeof x;
-  }
-};
+import type from 'type-of';
 
 let makeShallow = (subject) => {
   let resp = {};
