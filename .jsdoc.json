@@ -20,6 +20,6 @@
       "encoding": "utf8",
       "private": true,
       "recurse": true,
-      "template": "./node_modules/jaguarjs-jsdoc"
+      "template": "./node_modules/ink-docstrap/template"
     }
 }
