@@ -1,5 +1,5 @@
 ## <sub>v2.0.0</sub>
-#### *Jan.1, 2016* — [Docs](https://cdn.rawgit.com/chiedolabs/objob/b8b9b186bf186848d4ac642159e9540fb666e901/docs/ob.html)
+#### *Jan.1, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/b8b9b186bf186848d4ac642159e9540fb666e901/docs/ob.html)
 
  * Initial release
 
