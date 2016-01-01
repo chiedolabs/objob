@@ -117,14 +117,16 @@ let ob = function (subject) {
       return res;
       //return ob(res).removeUndefs();
     },
-    flatten: function(prefix='', shallow=false, counter = 0){
+    flatten: function(prefix='', shallow=false, depth = 1){
+      // With shallow set, that means instead of getting all of the array, we only get the first array
+      // item. Not sure if this is needed. May re-evaluate
       let res;
 
-      if(type(subject) === 'array' && counter === 0) {
+      if(type(subject) === 'array' && depth === 1) {
         res = [];
 
         for(let i of subject){
-          res = res.concat(ob(i).flatten(prefix, shallow, counter++));
+          res = res.concat(ob(i).flatten(prefix, shallow, ++depth));
         }
 
         return res;
@@ -148,9 +150,9 @@ let ob = function (subject) {
             res[tmpPrefix] = subject[i];
 
             if(type(subject[i]) === 'array' && shallow) {
-              res = merge(res, ob(subject[i][0]).flatten(tmpPrefix, shallow, counter++));
+              res = merge(res, ob(subject[i][0]).flatten(tmpPrefix, shallow, ++depth));
             } else {
-              res = merge(res, ob(subject[i]).flatten(tmpPrefix, shallow, counter++));
+              res = merge(res, ob(subject[i]).flatten(tmpPrefix, shallow, ++depth));
             }
           }
         }
