@@ -78,28 +78,17 @@ let ob = function (subject) {
           let keys = keyChain.split('.');
           for(let key of keys) {
             if(count === keys.length) {
-              // If we're at the last key, then set the value
-              if(type(tmp) === 'array') {
-                tmp.push(ob(value).expand());
-              } else {
-                // May not even need the expand here
-                tmp[key] = value;
-              }
+              tmp[key] = value;
             } else {
               let isArray = contains(key, '[]');
               if(isArray) {
                 key = key.replace('[]','');
                 tmp[key] = [];
-                tmp = tmp[key];
               } else {
-                if(type(tmp) === 'array') {
-                  tmp.push({});
-                  tmp = tmp[tmp.length - 1];
-                } else {
-                  tmp[key] = {};
-                  tmp = tmp[key];
-                }
+                tmp[key] = {};
               }
+
+              tmp = tmp[key];
             }
             count++;
           }
@@ -110,7 +99,7 @@ let ob = function (subject) {
           for(let i in subject) {
             let tmp = {};
             tmp[i] = subject[i];
-            console.dir(res);
+            console.dir('OB---------------');
             console.dir(ob(tmp).expand());
             res = {...res, ...ob(tmp).expand()};
           }
@@ -120,7 +109,7 @@ let ob = function (subject) {
         return subject;
       }
 
-      return res;
+      return ob(res).removeUndefs();
     },
     flatten: function(prefix='', shallow=false, counter = 0){
       let res;
@@ -189,6 +178,9 @@ let ob = function (subject) {
       }
 
       return arr;
+    },
+    removeUndefs: () => {
+      return subject;
     },
     select: (keys = []) => {
       let resp;
