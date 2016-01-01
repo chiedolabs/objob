@@ -92,8 +92,13 @@ let ob = function (subject) {
                 tmp[key] = [];
                 tmp = tmp[key];
               } else {
-                tmp[key] = {};
-                tmp = tmp[key];
+                if(type(tmp) === 'array') {
+                  tmp.push({});
+                  tmp = tmp[tmp.length - 1];
+                } else {
+                  tmp[key] = {};
+                  tmp = tmp[key];
+                }
               }
             }
             count++;
