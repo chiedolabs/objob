@@ -180,7 +180,31 @@ let ob = function (subject) {
       return arr;
     },
     removeUndefs: () => {
-      return subject;
+      let res;
+
+      if(type(subject) === 'array') {
+        res = [];
+        for(let key in subject) {
+          if(subject[key] === undefined) {
+          } else {
+            res.push(ob(subject[key]).removeUndefs());
+          }
+        }
+      } else if(type(subject) === 'object') {
+        for(let key in subject) {
+          if(subject[key] === undefined) {
+            delete subject[key];
+          } else {
+            subject[key] = ob(subject[key]).removeUndefs();
+          }
+        }
+
+        return subject;
+      } else {
+        return subject;
+      }
+
+      return res;
     },
     select: (keys = []) => {
       let resp;
