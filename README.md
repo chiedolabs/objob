@@ -1,5 +1,16 @@
-## Objob.js
+# Objob
 
-A tool for controlling and manipulating javascript object fields and output.
+A tool for advanced object manipulation.
 
-Docs coming soon.
+```bash
+import ob from 'objob';
+```
+
+## Further Reading
+
+  * [API Documentation](#coming-soon)
+  * [Changelog](./CHANGELOG.md)
+  * [Contributing](./CONTRIBUTING.md)
+
+## License
+MIT
