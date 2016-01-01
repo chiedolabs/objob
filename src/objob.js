@@ -3,6 +3,7 @@
 import uniques from 'uniques';
 import type from 'type-of';
 import contains from 'string-contains';
+import merge from 'deepmerge';
 
 let makeShallow = (subject) => {
   let resp = {};
@@ -99,9 +100,7 @@ let ob = function (subject) {
           for(let i in subject) {
             let tmp = {};
             tmp[i] = subject[i];
-            console.dir('OB---------------');
-            console.dir(ob(tmp).expand());
-            res = {...res, ...ob(tmp).expand()};
+            res = merge(res, ob(tmp).expand());
           }
         }
       } else {
@@ -109,7 +108,8 @@ let ob = function (subject) {
         return subject;
       }
 
-      return ob(res).removeUndefs();
+      return res;
+      //return ob(res).removeUndefs();
     },
     flatten: function(prefix='', shallow=false, counter = 0){
       let res;
@@ -142,9 +142,9 @@ let ob = function (subject) {
             res[tmpPrefix] = subject[i];
 
             if(type(subject[i]) === 'array' && shallow) {
-              res = {...res, ...ob(subject[i][0]).flatten(tmpPrefix, shallow, counter++)};
+              res = merge(res, ob(subject[i][0]).flatten(tmpPrefix, shallow, counter++));
             } else {
-              res = {...res, ...ob(subject[i]).flatten(tmpPrefix, shallow, counter++)};
+              res = merge(res, ob(subject[i]).flatten(tmpPrefix, shallow, counter++));
             }
           }
         }
