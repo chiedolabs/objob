@@ -6,7 +6,10 @@ import contains from 'string-contains';
 import merge from 'deepmerge';
 import { makeFlattenedShallow } from './functions';
 
-/** @namespace */
+/**
+ * @namespace
+ * @version 2.0.0
+ * */
 let ob = {
   /**
    * Returns an object without the given keys.
