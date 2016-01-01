@@ -8,7 +8,7 @@ import ob from 'objob';
 
 ## Further Reading
 
-  * [API Documentation](#coming-soon)
+  * [API Documentation](https://cdn.rawgit.com/chiedolabs/objob/master/docs/ob.html)
   * [Changelog](./CHANGELOG.md)
   * [Contributing](./CONTRIBUTING.md)
 
