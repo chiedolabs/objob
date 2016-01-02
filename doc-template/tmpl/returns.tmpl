@@ -44,15 +44,7 @@ returns.forEach(function (ret, i) {
 ?>
 
 <?js if (hasType) { ?>
-<table class="params">
-    <thead>
-    <tr>
-        <?js if (hasName) { ?><th>Name</th><?js } ?>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
+<div class="params">
     <?js
         var self = this;
         returns.forEach(function(ret) {
@@ -61,7 +53,7 @@ returns.forEach(function (ret, i) {
             }
     ?>
         <tr>
-            <?js if (ret.name) { ?><td class="name"><code><?js= ret.name ?></code></td><?js } ?>
+            <?js if (ret.name) { ?><span class="name"><code><?js= ret.name ?></code></span><?js } ?>
             <td class="type">
             <?js
                 if (ret.type && ret.type.names) {
@@ -77,8 +69,7 @@ returns.forEach(function (ret, i) {
             <?js } ?></td>
         </tr>
     <?js }); ?>
-    </tbody>
-</table>
+</div>
 <?js } else { ?>
 <?js if (returns[0].description) { ?>
 <?js= returns[0].description ?>

@@ -31,9 +31,9 @@ let ob = {
    * }
    *
    *
-   * @param {object|object[]} subject
-   * @param {string[]} keys
-   * @returns {object}
+   * @param {object|object[]} subject The array or object to perform the deselect operation on.
+   * @param {string[]} keys The keys of the object or nested object that you would like to deselect.
+   * @returns {object} The object without the deselected keys
    */
   deselect: function(subject, keys = []){
     let allKeys = ob.keys(ob.flatten(subject));

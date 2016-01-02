@@ -60,6 +60,7 @@ li {
   overflow: auto;
   width: 100%;
 }
+.param-desc p { display: inline;  }
 .navigation li.item {
   margin-bottom: 8px;
   padding-bottom: 8px;
