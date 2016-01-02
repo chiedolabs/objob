@@ -1,6 +1,6 @@
 # Objob
 
-A tool for advanced object manipulation.
+A library of functions for advanced object manipulation.
 
 ```bash
 import ob from 'objob';
