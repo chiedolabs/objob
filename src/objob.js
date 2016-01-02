@@ -133,7 +133,7 @@ let ob = {
    * while it's in a format that's easier to work with.
    *
    * @param {object|object[]} subject
-   * @param {string} [prefix='']
+   * @param {string} [prefix=""]
    * @param {integer} [depth=1]
    * @returns {object|object[]}
    */

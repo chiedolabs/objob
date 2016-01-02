@@ -59,7 +59,7 @@
             <?js if (params.hasDefault) {?>
                 <td class="default">
                 <?js if (typeof param.defaultvalue !== 'undefined') { ?>
-                    <?js= self.htmlsafe(param.defaultvalue) ?>
+                    default=<?js= self.htmlsafe(param.defaultvalue) ?>
                 <?js } ?>
                 </td>
             <?js } ?>
@@ -67,14 +67,14 @@
             <td class="description last">
                 <?js if (params.hasAttributes) {?>
                     <?js if (param.optional) { ?>
-                        <span class="optional">optional</span>
+                        <span class="optional extra">optional</span>
                     <?js } ?>
                     <?js if (param.nullable) { ?>
-                        <span class="nullable">nullable</span>
+                        <span class="nullable extra">nullable</span>
                     <?js } ?>
                         
                     <?js if (param.variable) { ?>
-                        <span class="repeatable">repeatable</span>
+                        <span class="repeatable extra">repeatable</span>
                     <?js } ?>
                 <?js } ?>
                 <?js if (param.description) { ?>
