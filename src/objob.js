@@ -314,9 +314,29 @@ let ob = {
   /**
    * Returns an object only with the given keys.
    *
-   * @param {object} subject
-   * @param {string[]} keys
-   * @returns {object}
+   * @example <caption>Basic usage.</caption>
+   * let x = {
+   *  a: 1,
+   *  b: 2,
+   *  c: 3,
+   * }
+   *
+   * ob.select(x, ['a','b']);
+   * // → {a: 1, b: 2}
+   *
+   * @example <caption>Advanced usage.</caption>
+   * let x = {
+   *  c: 3,
+   *  d: {e: 4, f: [5,6]},
+   *  g: [7, 8]
+   * }
+   *
+   * ob.select(x, ['d.e','d.f[].0','g[].1']);
+   * // → {d: {e: 4, f: [5]}, g: [8]}
+   *
+   * @param {object} subject The object to perform the select operation on
+   * @param {string[]} keys The keys you would like to select
+   * @returns {object} The object only with the selected keys.
    */
   select: (subject, keys = []) => {
     let resp;
@@ -347,7 +367,17 @@ let ob = {
   /**
    * Returns all values for a given object.
    *
-   * @param {object} subject
+   * @example
+   * let x = {
+   *   a: 1,
+   *   b: 2,
+   *   c: 3
+   * }
+   *
+   * ob.values(x)
+   * // → [1, 2, 3]
+   *
+   * @param {object} subject The object to get the values of
    * @returns {any[]}
    */
   values:(subject) => {
