@@ -2,22 +2,18 @@
 var self = this;
 ?>
 <div class="navigation">
-    <h3 class="applicationName"><a href="index.html"><?js= env.conf.templates.applicationName ?></a></h3>
+    <h3 class="applicationName">
+      <?js= env.conf.templates.applicationName ?>
+      <?js if (env.conf.version) {?>
+        <span class="tag-version">  v<?js= env.conf.version ?></span>
+      <?js } ?>
+    </h3>
 
-    <div class="search">
-        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
-    </div>
     <ul class="list">
     <?js
     this.nav.forEach(function (item) {
     ?>
         <li class="item" data-name="<?js= item.longname ?>">
-            <span class="title">
-                <?js= self.linkto(item.longname, item.longname) ?>
-                <?js if (item.type === 'namespace') { ?>
-                <span class="static">static</span>
-                <?js } ?>
-            </span>
             <ul class="members itemMembers">
             <?js
             if (item.members.length) {

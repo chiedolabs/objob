@@ -179,7 +179,7 @@ li {
   background-color: #ee7d7d !important;
 }
 .main .subsection-title {
-  font-size: 14px;
+  font-size: 20px;
   margin-top: 30px;
   color: #779c34;
 }
@@ -235,6 +235,14 @@ li {
   margin-top: 20px;
   padding-top: 5px;
   border-top: 1px solid #e1e1e1;
+  background: #000000;
+  color: #ffffff;
+  box-shadow: 0 .25em .5em #d3d3d3;
+  border-top: 1px solid #d3d3d3;
+  border-bottom: 1px solid #d3d3d3;
+  margin: .5em 0;
+  padding: .75em 0 .75em 10px;
+  position: relative;
 }
 .main .nameContainer .inherited {
   display: inline-block;
