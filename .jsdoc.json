@@ -20,7 +20,7 @@
 		"cleverLinks": true,
 		"monospaceLinks": true,
 		"default": {
-			"outputSourceFiles" : true
+			"outputSourceFiles" : false
 		},
 		"applicationName": "Ob Job",
 		"disqus": "",
