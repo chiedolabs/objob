@@ -20,17 +20,17 @@ let ob = {
    *  c: 3,
    * }
    *
-   * ob.deselect(x, [a,b]);
+   * ob.deselect(x, ['a','b']);
    * // → {c: 3}
    * @example <caption>Advanced usage.</caption>
    * let x = {
-   *  a: 1,
-   *  b: 2,
    *  c: 3,
    *  d: {e: 4, f: [5,6]},
    *  g: [7, 8]
    * }
    *
+   * ob.deselect(x, ['d.e','d.f[].0','g[].1']);
+   * // → {c: 3, d: {f:[6]}, g:[7]}
    *
    * @param {object|object[]} subject The array or object to perform the deselect operation on.
    * @param {string[]} keys The keys of the object or nested object that you would like to deselect.
@@ -59,6 +59,17 @@ let ob = {
   /**
    * Takes a flattened object or array and expands it back to a full object
    * or array.
+   *
+   * @example
+   * let x = {
+   *  'a.b.c': 1,
+   *  'a.b.d': [2,3]
+   *  'a.b.d[].0': 2,
+   *  'a.b.d[].1: 3',
+   * }
+   *
+   * ob.expand(x)
+   * // → {a: {b: {c: 1, d: [2,3]}}}
    *
    * @param {object|object[]} subject
    * @param {integer} [depth=1]
