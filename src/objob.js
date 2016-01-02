@@ -12,6 +12,26 @@ import { makeFlattenedShallow } from './functions';
  * */
 let ob = {
   /**
+   * Performs a deep clone of an object
+   *
+   * @example
+   * let x = {
+   *  a: 1,
+   *  b: 2,
+   *  c: 3,
+   * }
+   *
+   * y = ob.cloneDeep(x)
+   * y === x
+   * // → false
+   *
+   * @param {object} subject The object to clone.
+   * @returns {object} The cloned object
+   */
+  cloneDeep: function(subject){
+    return ob.expand(ob.flatten(subject));
+  },
+  /**
    * Returns an object without the given keys.
    * @example <caption>Basic usage.</caption>
    * let x = {
@@ -38,8 +58,6 @@ let ob = {
    */
   deselect: function(subject, keys = []){
     let allKeys = ob.keys(ob.flatten(subject));
-    console.log('---------');
-    console.log(allKeys);
     let keysToKeep = [];
 
     for( let subjectKey of allKeys ) {
@@ -297,6 +315,9 @@ let ob = {
    * @returns {object} The object without any undefined values
    */
   removeUndefs: (subject) => {
+    // Make sure we don't mutate the original object
+    subject = ob.cloneDeep(subject);
+
     let res;
 
     if(type(subject) === 'array') {

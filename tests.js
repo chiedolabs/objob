@@ -172,6 +172,14 @@ describe('Objob', () => {
     });
   });
 
+  describe('clone deep', () => {
+    it('should return a clone of the object', (done) => {
+      expect(ob.cloneDeep(ob3)).to.deep.equal(ob3);
+      expect(ob.cloneDeep(ob3)).to.not.equal(ob3);
+      done();
+    });
+  });
+
   describe('Chaining', () => {
     it('should return many of an object after filtering select select', (done) => {
       expect(ob.many(ob.select(ob1, ['name', 'age']),3))
