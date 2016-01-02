@@ -38,6 +38,8 @@ let ob = {
    */
   deselect: function(subject, keys = []){
     let allKeys = ob.keys(ob.flatten(subject));
+    console.log('---------');
+    console.log(allKeys);
     let keysToKeep = [];
 
     for( let subjectKey of allKeys ) {
@@ -197,7 +199,7 @@ let ob = {
     return res;
   },
   /**
-   * Return all keys for an object.
+   * Return all keys for an object recursively, including in arrays.
    *
    * @example
    * let x = {
@@ -209,6 +211,12 @@ let ob = {
    * ob.keys(x)
    * // → ['a','b','c']
    *
+   * @example
+   * let x = [{ a: 1, b: 2, c: 3}, {d: 1}]
+   *
+   * ob.keys(x)
+   * // → ['a','b','c', 'd']
+   *
    * @param {object} subject The object whose keys you wish to retrieve.
    * @returns {string[]} The keys
    */
@@ -219,13 +227,17 @@ let ob = {
       for(let i of subject){
         keys = keys.concat(ob.keys(i));
       }
-    } else {
-      for(let k in subject) {
-        keys.push(k);
-      };
-    }
 
-    return uniques(keys);
+      return uniques(keys);
+    } else if(type(subject) === 'object') {
+      for(let k in subject) {
+        keys = keys.concat(ob.keys(k));
+      };
+      return uniques(keys);
+    } else {
+      keys.push(subject);
+      return uniques(keys);
+    }
   },
   /**
    * Returns many of the object. If an array is passed, it will just return
@@ -365,7 +377,7 @@ let ob = {
     return resp;
   },
   /**
-   * Returns all values for a given object.
+   * Returns all values for a given object recursively.
    *
    * @example
    * let x = {
@@ -377,6 +389,17 @@ let ob = {
    * ob.values(x)
    * // → [1, 2, 3]
    *
+   * @example
+   * let x = {
+   *   a: 1,
+   *   b: 2,
+   *   c: 3,
+   *   d: [4]
+   * }
+   *
+   * ob.values(x)
+   * // → [1, 2, 3, 4]
+   *
    * @param {object} subject The object to get the values of
    * @returns {any[]}
    */
@@ -387,13 +410,17 @@ let ob = {
       for(let i of subject){
         values = values.concat(ob.values(i));
       }
-    } else {
-      for(let k in subject) {
-        values.push(subject[k]);
-      };
-    }
 
-    return uniques(values);
+      return uniques(values);
+    } else if(type(subject) === 'object') {
+      for(let k in subject) {
+        values = values.concat(ob.values(subject[k]));
+      };
+      return uniques(values);
+    } else {
+      values.push(subject);
+      return uniques(values);
+    }
   },
 };
 
