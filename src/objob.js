@@ -197,10 +197,20 @@ let ob = {
     return res;
   },
   /**
-   * Return all keys for an object or all keys of each object in an array.
+   * Return all keys for an object.
    *
-   * @param {object} subject
-   * @returns {string[]}
+   * @example
+   * let x = {
+   *   a: 1,
+   *   b: 2,
+   *   c: 3
+   * }
+   *
+   * ob.keys(x)
+   * // → ['a','b','c']
+   *
+   * @param {object} subject The object whose keys you wish to retrieve.
+   * @returns {string[]} The keys
    */
   keys:function(subject) {
     let keys = [];
@@ -218,12 +228,23 @@ let ob = {
     return uniques(keys);
   },
   /**
-   * Returns many of the object. If an array is used, it will just return
+   * Returns many of the object. If an array is passed, it will just return
    * the given array.
    *
-   * @param {object} subject
+   * @example
+   * let x = {
+   *   a: 1,
+   *   b: 2,
+   *   c: 3
+   * }
+   *
+   * ob.many(x)
+   * // → [{a:1,b:2,c:3},{a:1,b:2,c:3}]
+   *
+   *
+   * @param {object} subject The object you would like many of
    * @param {integer} num the number of desired objects
-   * @returns {object}
+   * @returns {object[]} An array with n copies of your object.
    */
   many: (subject, num = 2) => {
     let arr = [];
@@ -241,8 +262,27 @@ let ob = {
   /**
    * Removes all keys with undefined values from an object.
    *
-   * @param {object} subject
-   * @returns {object}
+   * @example
+   * let x = {
+   *   a: undefined,
+   *   b: {
+   *     c: undefined,
+   *     d: 2,
+   *   },
+   *   e: [undefined, 1, 2]
+   * }
+   *
+   * ob.removeUndefs(x)
+   * // → {
+   *   b: {
+   *     d: 2,
+   *   },
+   *   e: [1, 2]
+   * }
+   *
+   *
+   * @param {object} subject The object you would like to remove undefined values from.
+   * @returns {object} The object without any undefined values
    */
   removeUndefs: (subject) => {
     let res;
