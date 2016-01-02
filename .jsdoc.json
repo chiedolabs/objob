@@ -14,7 +14,7 @@
     "encoding": "utf8",
     "private": true,
     "recurse": true,
-    "template": "./doc-template"
+    "template": "./node_modules/minimal-jsdoc"
   },
 	"templates": {
 		"cleverLinks": true,

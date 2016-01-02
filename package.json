@@ -32,6 +32,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "chai": "^3.4.1",
     "jsdoc": "^3.4.0",
+    "minimal-jsdoc": "0.0.1",
     "mocha": "^2.3.4"
   }
 }
