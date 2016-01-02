@@ -14,6 +14,12 @@ li {
 #wrap {
   position: relative;
 }
+.method-sec {
+  border: 1px solid #d3d3d3;
+  border-top: 0;
+  margin-bottom: 20px;
+}
+.method-sec dd { padding: 10px; }
 ::-webkit-scrollbar {
   width: 8px;
   background-color: transparent;
@@ -27,14 +33,15 @@ li {
   float: left;
   width: 250px;
   height: 100%;
-  background-color: #1a1a1a;
+  background-color: #ffffff;
 }
 .navigation .applicationName {
   margin: 0;
   margin-top: 15px;
   padding: 10px 15px;
   font: bold 1.25em Helvetica;
-  color: #fff;
+  color: #000000;
+  font-weight: 200;
 }
 .navigation .applicationName a {
   color: #fff;
@@ -56,13 +63,12 @@ li {
 .navigation li.item {
   margin-bottom: 8px;
   padding-bottom: 8px;
-  border-bottom: 1px solid #333;
 }
 .navigation li.item a {
-  color: #bbb;
+  color: #000000;
 }
 .navigation li.item a:hover {
-  color: #fff;
+  color: #779c34;
 }
 .navigation li.item .title {
   cursor: pointer;
