@@ -19,8 +19,9 @@ let ob = {
    *  b: 2,
    *  c: 3,
    * }
+   *
    * ob.deselect(x, [a,b]);
-   * // Returns {c: 3}
+   * // → {c: 3}
    * @example <caption>Advanced usage.</caption>
    * let x = {
    *  a: 1,

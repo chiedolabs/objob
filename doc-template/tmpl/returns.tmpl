@@ -55,6 +55,7 @@ returns.forEach(function (ret, i) {
         <tr>
             <?js if (ret.name) { ?><span class="name"><code><?js= ret.name ?></code></span><?js } ?>
             <td class="type">
+            (
             <?js
                 if (ret.type && ret.type.names) {
                     ret.type.names.forEach(function(name, i) { ?>
@@ -64,9 +65,12 @@ returns.forEach(function (ret, i) {
                 }
             ?>
             </td>
-            <td class="description last"><?js= ret.description ?><?js if (ret.subReturns) { ?>
+            )
+            <?js if (ret.description) { ?>
+            <td class="description last">: <?js= ret.description ?><?js if (ret.subReturns) { ?>
                 <?js= self.partial('returns.tmpl', ret.subReturns) ?>
             <?js } ?></td>
+            <?js } ?>
         </tr>
     <?js }); ?>
 </div>
