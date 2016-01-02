@@ -181,23 +181,18 @@
             
               <code>subject</code>
             
-            ( 
             
-                
+            (
 <span class="param-type">object</span>
-|
 
-<span class="param-type">Array.&lt;object></span>
-
-
+)
             
             
             
-           )
             <td class="description last">
                 
                 
-                  <span class="param-desc">: <p>The array or object to perform the deselect operation on.</p>
+                  <span class="param-desc">: <p>The object to perform the deselect operation on.</p>
                     
                   </span>
                 
@@ -210,16 +205,14 @@
             
               <code>keys</code>
             
-            ( 
             
-                
+            (
 <span class="param-type">Array.&lt;string></span>
 
-
+)
             
             
             
-           )
             <td class="description last">
                 
                 
@@ -325,7 +318,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".expand">
               
-              ob.expand<span class="signature">(subject, <span class="optional">depth</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
+              ob.expand<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object}</span>
           </h4>
       
       </div>
@@ -336,7 +329,7 @@
       
       
       <div class="description">
-          <p>Takes a flattened object or array and expands it back to a full object<br>or array.</p>
+          <p>Takes a flattened object  and expands it back to a full object.</p>
       </div>
       
 
@@ -356,65 +349,20 @@
             
               <code>subject</code>
             
-            ( 
             
-                
+            (
 <span class="param-type">object</span>
-|
 
-<span class="param-type">Array.&lt;object></span>
-
-
+)
             
             
             
-                <td class="default">
-                
-                </td>
-            
-           )
             <td class="description last">
                 
-                    
-                    
-                        
-                    
                 
-                
-            </td>
-        </li>
-	
-	
-	
-        <li>
-            
-              <code>depth</code>
-            
-            ( 
-            
-                
-<span class="param-type">integer</span>
-
-
-            
-            
-            
-                <td class="default">
-                
-                    default=1
-                
-                </td>
-            
-           )
-            <td class="description last">
-                
+                  <span class="param-desc">: <p>The object to expand</p>
                     
-                        <span class="optional extra">optional</span>
-                    
-                    
-                        
-                    
-                
+                  </span>
                 
             </td>
         </li>
@@ -470,13 +418,12 @@
             (
             
                         object
-                         | 
-                    
-                        Array.&lt;object>
                         
                     
             </td>
             )
+            
+            <td class="description last">: The expanded object.</td>
             
         </tr>
     
@@ -490,7 +437,7 @@
           
 
     
-    <pre class="prettyprint"><code><p>let x = {<br> 'a.b.c': 1,<br> 'a.b.d': [2,3]<br> 'a.b.d[].0': 2,<br> 'a.b.d[].1: 3',<br>}</p>
+    <pre class="prettyprint"><code><p>let x = {<br> 'a.b.c': 1,<br> 'a.b.d': [2,3]<br> 'a.b.d[].0': 2,<br> 'a.b.d[].1': 3',<br>}</p>
 <p>ob.expand(x)<br>// → {a: {b: {c: 1, d: [2,3]}}}</p></code></pre>
     
 
@@ -505,7 +452,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".flatten">
               
-              ob.flatten<span class="signature">(subject, <span class="optional">prefix</span>, <span class="optional">depth</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
+              ob.flatten<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object}</span>
           </h4>
       
       </div>
@@ -516,7 +463,7 @@
       
       
       <div class="description">
-          <p>Takes an object or array and return a flattened representation of that object or array<br>that has one level of depth. This allows you to do complex operations on your object<br>while it's in a format that's easier to work with.</p>
+          <p>Takes an object and return a flattened representation of that object that has one level of depth. This allows you to do complex operations on your object while it's in a format that's easier to work with.</p>
       </div>
       
 
@@ -536,100 +483,20 @@
             
               <code>subject</code>
             
-            ( 
             
-                
+            (
 <span class="param-type">object</span>
-|
 
-<span class="param-type">Array.&lt;object></span>
-
-
+)
             
             
             
-                <td class="default">
-                
-                </td>
-            
-           )
             <td class="description last">
                 
+                
+                  <span class="param-desc">: <p>The object to perform the flattening on</p>
                     
-                    
-                        
-                    
-                
-                
-            </td>
-        </li>
-	
-	
-	
-        <li>
-            
-              <code>prefix</code>
-            
-            ( 
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            
-            
-                <td class="default">
-                
-                    default=""
-                
-                </td>
-            
-           )
-            <td class="description last">
-                
-                    
-                        <span class="optional extra">optional</span>
-                    
-                    
-                        
-                    
-                
-                
-            </td>
-        </li>
-	
-	
-	
-        <li>
-            
-              <code>depth</code>
-            
-            ( 
-            
-                
-<span class="param-type">integer</span>
-
-
-            
-            
-            
-                <td class="default">
-                
-                    default=1
-                
-                </td>
-            
-           )
-            <td class="description last">
-                
-                    
-                        <span class="optional extra">optional</span>
-                    
-                    
-                        
-                    
-                
+                  </span>
                 
             </td>
         </li>
@@ -685,13 +552,12 @@
             (
             
                         object
-                         | 
-                    
-                        Array.&lt;object>
                         
                     
             </td>
             )
+            
+            <td class="description last">: The flat representation of the object</td>
             
         </tr>
     
@@ -700,6 +566,15 @@
 
       
       
+      
+          <h5>Example</h5>
+          
+
+    
+    <pre class="prettyprint"><code><p>let x = {<br>  a:{<br>    b:{<br>      c: 1,<br>      d: [2,3]<br>    }<br> }<br>}</p>
+<p>ob.flatten(x)<br>// → {<br> 'a.b.c': 1,<br> 'a.b.d': [2,3]<br> 'a.b.d[].0': 2,<br> 'a.b.d[].1': 3',<br>}</p></code></pre>
+    
+
       
   </dd>
 </div>
@@ -742,19 +617,14 @@
             
               <code>subject</code>
             
-            ( 
             
-                
+            (
 <span class="param-type">object</span>
-|
 
-<span class="param-type">Array.&lt;object></span>
-
-
+)
             
             
             
-           )
             <td class="description last">
                 
                 
@@ -835,7 +705,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".many">
               
-              ob.many<span class="signature">(subject, num)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;object>}</span>
+              ob.many<span class="signature">(subject, num)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object}</span>
           </h4>
       
       </div>
@@ -866,19 +736,14 @@
             
               <code>subject</code>
             
-            ( 
             
-                
+            (
 <span class="param-type">object</span>
-|
 
-<span class="param-type">Array.&lt;object></span>
-
-
+)
             
             
             
-           )
             <td class="description last">
                 
                 
@@ -891,16 +756,14 @@
             
               <code>num</code>
             
-            ( 
             
-                
+            (
 <span class="param-type">integer</span>
 
-
+)
             
             
             
-           )
             <td class="description last">
                 
                 
@@ -961,7 +824,7 @@
             <td class="type">
             (
             
-                        Array.&lt;object>
+                        object
                         
                     
             </td>
@@ -985,7 +848,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".removeUndefs">
               
-              ob.removeUndefs<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
+              ob.removeUndefs<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object}</span>
           </h4>
       
       </div>
@@ -996,7 +859,7 @@
       
       
       <div class="description">
-          <p>Removes all keys with undefined values from an object or array</p>
+          <p>Removes all keys with undefined values from an object.</p>
       </div>
       
 
@@ -1016,19 +879,14 @@
             
               <code>subject</code>
             
-            ( 
             
-                
+            (
 <span class="param-type">object</span>
-|
 
-<span class="param-type">Array.&lt;object></span>
-
-
+)
             
             
             
-           )
             <td class="description last">
                 
                 
@@ -1086,9 +944,6 @@
             (
             
                         object
-                         | 
-                    
-                        Array.&lt;object>
                         
                     
             </td>
@@ -1143,19 +998,14 @@
             
               <code>subject</code>
             
-            ( 
             
-                
+            (
 <span class="param-type">object</span>
-|
 
-<span class="param-type">Array.&lt;object></span>
-
-
+)
             
             
             
-           )
             <td class="description last">
                 
                 
@@ -1168,16 +1018,14 @@
             
               <code>keys</code>
             
-            ( 
             
-                
+            (
 <span class="param-type">Array.&lt;string></span>
 
-
+)
             
             
             
-           )
             <td class="description last">
                 
                 
@@ -1269,7 +1117,7 @@
       
       
       <div class="description">
-          <p>Returns all values for a given object or array as an array.</p>
+          <p>Returns all values for a given object.</p>
       </div>
       
 
@@ -1289,19 +1137,14 @@
             
               <code>subject</code>
             
-            ( 
             
-                
+            (
 <span class="param-type">object</span>
-|
 
-<span class="param-type">Array.&lt;object></span>
-
-
+)
             
             
             
-           )
             <td class="description last">
                 
                 
@@ -1392,7 +1235,7 @@
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Jan 02 2016 08:23:26 GMT-0500 (EST)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Jan 02 2016 08:35:44 GMT-0500 (EST)
         </footer>
     </div>
 </div>
