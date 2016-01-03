@@ -1,6 +1,6 @@
 # Ob Job
 
-A library of deep recursive object operations. Many functions will be similar to lodash except deeper.
+A library of deep/recursive utilities for nested objects. Many functions will be similar to the object functions in lodash but will be deep/recursive versions.
 
 ```bash
 import ob from 'objob';
