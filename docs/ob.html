@@ -59,17 +59,19 @@
             
                 <li data-name="ob.clone"><a href="ob.html#.clone">clone</a></li>
             
-                <li data-name="ob.deselect"><a href="ob.html#.deselect">deselect</a></li>
-            
                 <li data-name="ob.expand"><a href="ob.html#.expand">expand</a></li>
+            
+                <li data-name="ob.filter"><a href="ob.html#.filter">filter</a></li>
             
                 <li data-name="ob.flatten"><a href="ob.html#.flatten">flatten</a></li>
             
                 <li data-name="ob.keys"><a href="ob.html#.keys">keys</a></li>
             
-                <li data-name="ob.removeUndefs"><a href="ob.html#.removeUndefs">removeUndefs</a></li>
+                <li data-name="ob.merge"><a href="ob.html#.merge">merge</a></li>
             
-                <li data-name="ob.select"><a href="ob.html#.select">select</a></li>
+                <li data-name="ob.omit"><a href="ob.html#.omit">omit</a></li>
+            
+                <li data-name="ob.pick"><a href="ob.html#.pick">pick</a></li>
             
                 <li data-name="ob.values"><a href="ob.html#.values">values</a></li>
             
@@ -151,7 +153,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".clone">
               
-              ob.clone<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
+              ob.clone<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;any>}</span>
           </h4>
       
       </div>
@@ -187,7 +189,7 @@
 <span class="param-type">object</span>
 |
 
-<span class="param-type">Array.&lt;object></span>
+<span class="param-type">Array.&lt;any></span>
 
 )
             
@@ -256,7 +258,7 @@
                         object
                          | 
                     
-                        Array.&lt;object>
+                        Array.&lt;any>
                         
                     
             </td>
@@ -276,182 +278,10 @@
           
 
     
-    <pre class="prettyprint"><code><p>let x = {<br> a: 1,<br> b: 2,<br> c: 3,<br>}</p>
-<p>y = ob.clone(x)<br>y === x<br>// → false</p></code></pre>
-    
-
-      
-  </dd>
-</div>
-
-        
-            
-<div class="method-sec">
-  <dt>
-      <div class="nameContainer">
-          <h4 class="name" id=".deselect">
-              
-              ob.deselect<span class="signature">(subject, keys)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
-          </h4>
-      
-      </div>
-
-      
-  </dt>
-  <dd>
-      
-      
-      <div class="description">
-          <p>Returns an object without the given keys or an array with each object not having the given keys.</p>
-      </div>
-      
-
-      
-      
-      
-      
-      
-          
-<strong class="subtitle">Arguments</strong>
-<br/>
-<br/>
-<ol class="params">
-	
-	
-        <li>
-            
-              <code>subject</code>
-            
-            
-            (
-<span class="param-type">object</span>
-|
-
-<span class="param-type">Array.&lt;object></span>
-
-)
-            
-            
-            
-            <td class="description last">
-                
-                
-                  <span class="param-desc">: <p>The object or array to perform the deselect operation on.</p>
-                    
-                  </span>
-                
-            </td>
-        </li>
-	
-	
-	
-        <li>
-            
-              <code>keys</code>
-            
-            
-            (
-<span class="param-type">Array.&lt;string></span>
-
-)
-            
-            
-            
-            <td class="description last">
-                
-                
-                  <span class="param-desc">: <p>The keys of the object or nested object that you would like to deselect.</p>
-                    
-                  </span>
-                
-            </td>
-        </li>
-	
-	
-  </ol>
-
-      
-      
-      
-<dl class="details">
-    
-        
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-      
-      
-
-      
-
-      
-      
-      
-      
-      
-      <h5>Returns:</h5>
-      
-
-
-<div class="params">
-    
-        <tr>
-            
-            <td class="type">
-            (
-            
-                        object
-                         | 
-                    
-                        Array.&lt;object>
-                        
-                    
-            </td>
-            )
-            
-            <td class="description last">: The object or array of objects without the deselected keys</td>
-            
-        </tr>
-    
-</div>
-
-
-      
-      
-      
-          <h5>Examples</h5>
-          
-        <p class="code-caption">Basic usage.</p>
-    
-
-    
-    <pre class="prettyprint"><code><br>let x = {<br> a: 1,<br> b: 2,<br> c: 3,<br>}</p>
-<p>ob.deselect(x, ['a','b']);<br>// → {c: 3}</p></code></pre>
-    
-
-        <p class="code-caption">Advanced usage.</p>
-    
-
-    
-    <pre class="prettyprint"><code><br>let x = {<br> c: 3,<br> d: {e: 4, f: [5,6]},<br> g: [7, 8]<br>}</p>
-<p>ob.deselect(x, ['d.e','d.f[].0','g[].1']);<br>// → {c: 3, d: {f:[6]}, g:[7]}</p></code></pre>
+    <pre class="prettyprint"><code><p>let x = {<br> a: 1,<br> d: {f: 4}<br>}</p>
+<p>y = ob.clone(x)</p>
+<p>(x.a === y.a &amp;&amp; x.d.f === y.d.f)<br>// → true</p>
+<p>y === x<br>// → false</p></code></pre>
     
 
       
@@ -465,7 +295,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".expand">
               
-              ob.expand<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
+              ob.expand<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;any>}</span>
           </h4>
       
       </div>
@@ -567,7 +397,7 @@
                         object
                          | 
                     
-                        Array.&lt;object>
+                        Array.&lt;any>
                         
                     
             </td>
@@ -583,12 +413,182 @@
       
       
       
+          <h5>Examples</h5>
+          
+
+    
+    <pre class="prettyprint"><code><p>let x = {<br> 'a.b.c': 1,<br> 'a.b.d': [2,3]<br> 'a.b.d[].0': 2,<br> 'a.b.d[].1': 3,<br>}</p>
+<p>ob.expand(x)<br>// → {<br>// a: {<br>//   b: {<br>//   c: 1,<br>//   d: [2,3]<br>// }}}</p></code></pre>
+    
+
+
+    
+    <pre class="prettyprint"><code><p>let x = {<br> '[]0[].0.a.b.c': 1,<br> '[]1.b.d': [2,3]<br> '[]1.b.d[].0': 2<br> '[]1.b.d[].1': 3<br>}</p>
+<p>ob.expand(x)<br>// → [<br>// [{<br>//   a: {<br>//     b: {<br>//       c: 1,<br>//     },<br>//   },<br>// }],<br>// {<br>//   b: {<br>//     d: [2,3]<br>//   }<br>// }<br>//]</p></code></pre>
+    
+
+      
+  </dd>
+</div>
+
+        
+            
+<div class="method-sec">
+  <dt>
+      <div class="nameContainer">
+          <h4 class="name" id=".filter">
+              
+              ob.filter<span class="signature">(subject, validate)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;any>}</span>
+          </h4>
+      
+      </div>
+
+      
+  </dt>
+  <dd>
+      
+      
+      <div class="description">
+          <p>Removes all keys with undefined values from an object and/or arrays of objects.</p>
+      </div>
+      
+
+      
+      
+      
+      
+      
+          
+<strong class="subtitle">Arguments</strong>
+<br/>
+<br/>
+<ol class="params">
+	
+	
+        <li>
+            
+              <code>subject</code>
+            
+            
+            (
+<span class="param-type">object</span>
+|
+
+<span class="param-type">Array.&lt;any></span>
+
+)
+            
+            
+            
+            <td class="description last">
+                
+                
+                  <span class="param-desc">: <p>The object or array of objects you would like to remove undefined values from.</p>
+                    
+                  </span>
+                
+            </td>
+        </li>
+	
+	
+	
+        <li>
+            
+              <code>validate</code>
+            
+            
+            (
+<span class="param-type">function</span>
+
+)
+            
+            
+            
+            <td class="description last">
+                
+                
+                  <span class="param-desc">: <p>The function to perform for the filter.</p>
+                    
+                  </span>
+                
+            </td>
+        </li>
+	
+	
+  </ol>
+
+      
+      
+      
+<dl class="details">
+    
+        
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+      
+      
+
+      
+
+      
+      
+      
+      
+      
+      <h5>Returns:</h5>
+      
+
+
+<div class="params">
+    
+        <tr>
+            
+            <td class="type">
+            (
+            
+                        object
+                         | 
+                    
+                        Array.&lt;any>
+                        
+                    
+            </td>
+            )
+            
+            <td class="description last">: The object or array of objects without any undefined values</td>
+            
+        </tr>
+    
+</div>
+
+
+      
+      
+      
           <h5>Example</h5>
           
 
     
-    <pre class="prettyprint"><code><p>let x = {<br> 'a.b.c': 1,<br> 'a.b.d': [2,3]<br> 'a.b.d[].0': 2,<br> 'a.b.d[].1': 3',<br>}</p>
-<p>ob.expand(x)<br>// → {a: {b: {c: 1, d: [2,3]}}}</p></code></pre>
+    <pre class="prettyprint"><code><p>let x = {<br>  a: undefined,<br>  b: {<br>    c: undefined,<br>    d: 2,<br>  },<br>  e: [undefined, 1, 2]<br>}</p>
+<p>ob.filter(x)<br>// → {<br>//  b: {<br>//    d: 2,<br>//  },<br>//  e: [1, 2]<br>//}</p></code></pre>
     
 
       
@@ -638,7 +638,7 @@
 <span class="param-type">object</span>
 |
 
-<span class="param-type">Array.&lt;object></span>
+<span class="param-type">Array.&lt;any></span>
 
 )
             
@@ -720,12 +720,18 @@
       
       
       
-          <h5>Example</h5>
+          <h5>Examples</h5>
           
 
     
     <pre class="prettyprint"><code><p>let x = {<br>  a:{<br>    b:{<br>      c: 1,<br>      d: [2,3]<br>    }<br> }<br>}</p>
-<p>ob.flatten(x)<br>// → {<br> 'a.b.c': 1,<br> 'a.b.d': [2,3]<br> 'a.b.d[].0': 2,<br> 'a.b.d[].1': 3',<br>}</p></code></pre>
+<p>ob.flatten(x)<br>// → {<br>// 'a.b.c': 1,<br>// 'a.b.d': [2,3]<br>// 'a.b.d[].0': 2,<br>// 'a.b.d[].1': 3',<br>//}</p></code></pre>
+    
+
+
+    
+    <pre class="prettyprint"><code><p>let x = [<br> [{<br>   a: {<br>     b: {<br>       c: 1,<br>     },<br>   },<br> }],<br> {<br>   b: {<br>     d: [2,3]<br>   }<br> }<br>]</p>
+<p>// → {<br>// '[]0[].0.a.b.c': 1,<br>// '[]1.b.d': [2,3]<br>// '[]1.b.d[].0': 2<br>// '[]1.b.d[].1': 3<br>//}</p></code></pre>
     
 
       
@@ -739,7 +745,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".keys">
               
-              ob.keys<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;string>}</span>
+              ob.keys<span class="signature">(subject, <span class="optional">unique</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;string>}</span>
           </h4>
       
       </div>
@@ -775,16 +781,62 @@
 <span class="param-type">object</span>
 |
 
-<span class="param-type">Array.&lt;object></span>
+<span class="param-type">Array.&lt;any></span>
 
 )
             
             
             
+                <span class="default extra">
+                
+                </span>
+            
             <td class="description last">
+                
+                    
+                    
+                        
+                    
                 
                 
                   <span class="param-desc">: <p>The object or array of objects whose keys you wish to retrieve.</p>
+                    
+                  </span>
+                
+            </td>
+        </li>
+	
+	
+	
+        <li>
+            
+              <code>unique</code>
+            
+            
+            (
+<span class="param-type">boolean</span>
+
+)
+            
+            
+            
+                <span class="default extra">
+                
+                   default=true
+                
+                </span>
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional extra">optional</span>
+                    
+                    
+                        
+                    
+                
+                
+                  <span class="param-desc">: <p>Whether the result should contain duplicates or not</p>
                     
                   </span>
                 
@@ -880,9 +932,9 @@
 <div class="method-sec">
   <dt>
       <div class="nameContainer">
-          <h4 class="name" id=".removeUndefs">
+          <h4 class="name" id=".merge">
               
-              ob.removeUndefs<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
+              ob.merge<span class="signature">(target, src)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;any>}</span>
           </h4>
       
       </div>
@@ -893,7 +945,7 @@
       
       
       <div class="description">
-          <p>Removes all keys with undefined values from an object and/or arrays of objects.</p>
+          <p>Merges the enumerable attributes of two objects deeply.</p>
       </div>
       
 
@@ -911,14 +963,14 @@
 	
         <li>
             
-              <code>subject</code>
+              <code>target</code>
             
             
             (
 <span class="param-type">object</span>
 |
 
-<span class="param-type">Array.&lt;object></span>
+<span class="param-type">Array.&lt;any></span>
 
 )
             
@@ -927,7 +979,34 @@
             <td class="description last">
                 
                 
-                  <span class="param-desc">: <p>The object or array of objects you would like to remove undefined values from.</p>
+                  <span class="param-desc">: <p>The object or array of objects to merge into</p>
+                    
+                  </span>
+                
+            </td>
+        </li>
+	
+	
+	
+        <li>
+            
+              <code>src</code>
+            
+            
+            (
+<span class="param-type">object</span>
+|
+
+<span class="param-type">Array.&lt;any></span>
+
+)
+            
+            
+            
+            <td class="description last">
+                
+                
+                  <span class="param-desc">: <p>The object or array of objects to merge from</p>
                     
                   </span>
                 
@@ -987,13 +1066,13 @@
                         object
                          | 
                     
-                        Array.&lt;object>
+                        Array.&lt;any>
                         
                     
             </td>
             )
             
-            <td class="description last">: The object or array of objects without any undefined values</td>
+            <td class="description last">: The merged object or array</td>
             
         </tr>
     
@@ -1007,8 +1086,9 @@
           
 
     
-    <pre class="prettyprint"><code><p>let x = {<br>  a: undefined,<br>  b: {<br>    c: undefined,<br>    d: 2,<br>  },<br>  e: [undefined, 1, 2]<br>}</p>
-<p>ob.removeUndefs(x)<br>// → {<br>  b: {<br>    d: 2,<br>  },<br>  e: [1, 2]<br>}</p></code></pre>
+    <pre class="prettyprint"><code><p>let x = {<br> a: {b: 1},<br>}</p>
+<p>let y = {<br> a: {c: 1},<br>}</p>
+<p>ob.merge(x, y);<br>// → {a: {b: 1, c:1}}</p></code></pre>
     
 
       
@@ -1020,9 +1100,9 @@
 <div class="method-sec">
   <dt>
       <div class="nameContainer">
-          <h4 class="name" id=".select">
+          <h4 class="name" id=".omit">
               
-              ob.select<span class="signature">(subject, keys)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
+              ob.omit<span class="signature">(subject, keys)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;any>}</span>
           </h4>
       
       </div>
@@ -1033,7 +1113,7 @@
       
       
       <div class="description">
-          <p>Returns an object only with the given keys. If an array is passed, it will return an array of each given object only having the selected keys.</p>
+          <p>Returns an object without the given keys or an array with each object not having the given keys.</p>
       </div>
       
 
@@ -1058,7 +1138,7 @@
 <span class="param-type">object</span>
 |
 
-<span class="param-type">Array.&lt;object></span>
+<span class="param-type">Array.&lt;any></span>
 
 )
             
@@ -1067,7 +1147,7 @@
             <td class="description last">
                 
                 
-                  <span class="param-desc">: <p>The object or array of objects to perform the select operation on</p>
+                  <span class="param-desc">: <p>The object or array to perform the omit operation on.</p>
                     
                   </span>
                 
@@ -1082,6 +1162,9 @@
             
             
             (
+<span class="param-type">string</span>
+|
+
 <span class="param-type">Array.&lt;string></span>
 
 )
@@ -1091,7 +1174,7 @@
             <td class="description last">
                 
                 
-                  <span class="param-desc">: <p>The keys you would like to select</p>
+                  <span class="param-desc">: <p>The keys of the object or nested object that you would like to omit.</p>
                     
                   </span>
                 
@@ -1151,13 +1234,13 @@
                         object
                          | 
                     
-                        Array.&lt;object>
+                        Array.&lt;any>
                         
                     
             </td>
             )
             
-            <td class="description last">: The object or array of objects with only the selected keys.</td>
+            <td class="description last">: The object or array of objects without the omited keys</td>
             
         </tr>
     
@@ -1169,20 +1252,183 @@
       
           <h5>Examples</h5>
           
-        <p class="code-caption">Basic usage.</p>
+
+    
+    <pre class="prettyprint"><code><p>let x = {<br> c: 3,<br> d: {e: 4, f: [5,6]},<br> g: [7, 8]<br>}</p>
+<p>ob.omit(x, ['d.e','d.f[].0','g[].1']);<br>// → {<br>//  c:3,<br>//  d: {<br>//    f: [6]<br>//  },<br>//  g:[7]<br>//}</p></code></pre>
+    
+
+
+    
+    <pre class="prettyprint"><code><p>let x = [<br> 3,<br> {e: 4, f: [5,6]},<br> [7, 8]<br>]</p>
+<p>ob.omit(x, ['[]1.e','[]1.f[].0','[]2[].1']);<br>// → {<br>//  3,<br>//  {<br>//    f: [6]<br>//  },<br>//  [7]<br>//}</p></code></pre>
+    
+
+      
+  </dd>
+</div>
+
+        
+            
+<div class="method-sec">
+  <dt>
+      <div class="nameContainer">
+          <h4 class="name" id=".pick">
+              
+              ob.pick<span class="signature">(subject, keys)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;any>}</span>
+          </h4>
+      
+      </div>
+
+      
+  </dt>
+  <dd>
+      
+      
+      <div class="description">
+          <p>Returns an object only with the given keys. If an array is passed, it will return an array of each given object only having the picked keys.</p>
+      </div>
+      
+
+      
+      
+      
+      
+      
+          
+<strong class="subtitle">Arguments</strong>
+<br/>
+<br/>
+<ol class="params">
+	
+	
+        <li>
+            
+              <code>subject</code>
+            
+            
+            (
+<span class="param-type">object</span>
+|
+
+<span class="param-type">Array.&lt;any></span>
+
+)
+            
+            
+            
+            <td class="description last">
+                
+                
+                  <span class="param-desc">: <p>The object or array of objects to perform the pick operation on</p>
+                    
+                  </span>
+                
+            </td>
+        </li>
+	
+	
+	
+        <li>
+            
+              <code>keys</code>
+            
+            
+            (
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Array.&lt;string></span>
+
+)
+            
+            
+            
+            <td class="description last">
+                
+                
+                  <span class="param-desc">: <p>The keys you would like to pick</p>
+                    
+                  </span>
+                
+            </td>
+        </li>
+	
+	
+  </ol>
+
+      
+      
+      
+<dl class="details">
+    
+        
+    
     
 
     
-    <pre class="prettyprint"><code><br>let x = {<br> a: 1,<br> b: 2,<br> c: 3,<br>}</p>
-<p>ob.select(x, ['a','b']);<br>// → {a: 1, b: 2}</p></code></pre>
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
 
-        <p class="code-caption">Advanced usage.</p>
+      
+      
+
+      
+
+      
+      
+      
+      
+      
+      <h5>Returns:</h5>
+      
+
+
+<div class="params">
     
+        <tr>
+            
+            <td class="type">
+            (
+            
+                        object
+                         | 
+                    
+                        Array.&lt;any>
+                        
+                    
+            </td>
+            )
+            
+            <td class="description last">: The object or array of objects with only the picked keys.</td>
+            
+        </tr>
+    
+</div>
+
+
+      
+      
+      
+          <h5>Example</h5>
+          
 
     
-    <pre class="prettyprint"><code><br>let x = {<br> c: 3,<br> d: {e: 4, f: [5,6]},<br> g: [7, 8]<br>}</p>
-<p>ob.select(x, ['d.e','d.f[].0','g[].1']);<br>// → {d: {e: 4, f: [5]}, g: [8]}</p></code></pre>
+    <pre class="prettyprint"><code><p>let x = {<br> c: 3,<br> d: {e: 4, f: [5,6]},<br> g: [7, 8]<br>}</p>
+<p>ob.pick(x, ['d.e','d.f[].0','g[].1']);<br>// → {d: {e: 4, f: [5]}, g: [8]}</p></code></pre>
     
 
       
@@ -1196,7 +1442,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".values">
               
-              ob.values<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;any>}</span>
+              ob.values<span class="signature">(subject, <span class="optional">unique</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;any>}</span>
           </h4>
       
       </div>
@@ -1232,16 +1478,62 @@
 <span class="param-type">object</span>
 |
 
-<span class="param-type">Array.&lt;object></span>
+<span class="param-type">Array.&lt;any></span>
 
 )
             
             
             
+                <span class="default extra">
+                
+                </span>
+            
             <td class="description last">
+                
+                    
+                    
+                        
+                    
                 
                 
                   <span class="param-desc">: <p>The object or array of objects to get the values of</p>
+                    
+                  </span>
+                
+            </td>
+        </li>
+	
+	
+	
+        <li>
+            
+              <code>unique</code>
+            
+            
+            (
+<span class="param-type">boolean</span>
+
+)
+            
+            
+            
+                <span class="default extra">
+                
+                   default=true
+                
+                </span>
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional extra">optional</span>
+                    
+                    
+                        
+                    
+                
+                
+                  <span class="param-desc">: <p>Whether the result should contain duplicates or not</p>
                     
                   </span>
                 
@@ -1347,7 +1639,7 @@
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Jan 03 2016 16:07:34 GMT-0500 (EST)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Jan 04 2016 12:17:01 GMT-0500 (EST)
         </footer>
     </div>
 </div>

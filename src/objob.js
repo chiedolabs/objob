@@ -3,7 +3,6 @@
 import uniques from 'uniques';
 import type from 'type-of';
 import contains from 'string-contains';
-import merge from 'deepmerge';
 import { makeFlattenedShallow } from './functions';
 
 /**
@@ -17,54 +16,81 @@ let ob = {
    * @example
    * let x = {
    *  a: 1,
-   *  b: 2,
-   *  c: 3,
+   *  d: {f: 4}
    * }
    *
    * y = ob.clone(x)
+   *
+   * (x.a === y.a && x.d.f === y.d.f)
+   * // → true
+   *
    * y === x
    * // → false
    *
-   * @param {object|object[]} subject The object or array to clone.
-   * @returns {object|object[]} The cloned object or arraay
+   * @param {object|any[]} subject The object or array to clone.
+   * @returns {object|any[]} The cloned object or arraay
    */
   clone: function(subject){
-    return ob.expand(ob.flatten(subject));
+    if(type(subject) === 'object' || type(subject) === 'array') {
+      return ob.expand(ob.flatten(subject));
+    } else {
+      return subject;
+    }
   },
   /**
    * Returns an object without the given keys or an array with each object not having the given keys.
-   * @example <caption>Basic usage.</caption>
-   * let x = {
-   *  a: 1,
-   *  b: 2,
-   *  c: 3,
-   * }
    *
-   * ob.deselect(x, ['a','b']);
-   * // → {c: 3}
-   * @example <caption>Advanced usage.</caption>
+   * @example
    * let x = {
    *  c: 3,
    *  d: {e: 4, f: [5,6]},
    *  g: [7, 8]
    * }
    *
-   * ob.deselect(x, ['d.e','d.f[].0','g[].1']);
-   * // → {c: 3, d: {f:[6]}, g:[7]}
+   * ob.omit(x, ['d.e','d.f[].0','g[].1']);
+   * // → {
+   * //  c:3,
+   * //  d: {
+   * //    f: [6]
+   * //  },
+   * //  g:[7]
+   * //}
    *
-   * @param {object|object[]} subject The object or array to perform the deselect operation on.
-   * @param {string[]} keys The keys of the object or nested object that you would like to deselect.
-   * @returns {object|object[]} The object or array of objects without the deselected keys
+   * @example
+   * let x = [
+   *  3,
+   *  {e: 4, f: [5,6]},
+   *  [7, 8]
+   * ]
+   *
+   * ob.omit(x, ['[]1.e','[]1.f[].0','[]2[].1']);
+   * // → {
+   * //  3,
+   * //  {
+   * //    f: [6]
+   * //  },
+   * //  [7]
+   * //}
+   *
+   * @param {object|any[]} subject The object or array to perform the omit operation on.
+   * @param {string|string[]} keys The keys of the object or nested object that you would like to omit.
+   * @returns {object|any[]} The object or array of objects without the omited keys
    */
-  deselect: function(subject, keys = []){
-    let allKeys = ob.keys(ob.flatten(subject));
+  omit: function(subject, keys = []){
+    let subjectKeys = ob.keys(ob.flatten(subject));
     let keysToKeep = [];
 
-    for( let subjectKey of allKeys ) {
+    for( let subjectKey of subjectKeys ) {
       let keepKey = true;
 
-      for( let keyToRemove of keys ){
-        if(subjectKey === keyToRemove){
+      if(type(keys) === 'array') {
+        for( let keyToRemove of keys ){
+          if(subjectKey === keyToRemove){
+            keepKey = false;
+          }
+        }
+      } else if(type(keys) === 'string') {
+        if(subjectKey === keys){
           keepKey = false;
         }
       }
@@ -72,86 +98,138 @@ let ob = {
       if(keepKey){
         keysToKeep.push(subjectKey);
       }
+
     }
 
-    return ob.select(subject, keysToKeep);
+    return ob.pick(subject, keysToKeep);
   },
   /**
    * Takes a flattened object and expands it back to a full object or array of objects.
    *
    * @example
+   *
    * let x = {
    *  'a.b.c': 1,
    *  'a.b.d': [2,3]
    *  'a.b.d[].0': 2,
-   *  'a.b.d[].1': 3',
+   *  'a.b.d[].1': 3,
    * }
    *
    * ob.expand(x)
-   * // → {a: {b: {c: 1, d: [2,3]}}}
+   * // → {
+   * // a: {
+   * //   b: {
+   * //   c: 1,
+   * //   d: [2,3]
+   * // }}}
+   *
+   * @example
+   * let x = {
+   *  '[]0[].0.a.b.c': 1,
+   *  '[]1.b.d': [2,3]
+   *  '[]1.b.d[].0': 2
+   *  '[]1.b.d[].1': 3
+   * }
+   *
+   * ob.expand(x)
+   * // → [
+   * // [{
+   * //   a: {
+   * //     b: {
+   * //       c: 1,
+   * //     },
+   * //   },
+   * // }],
+   * // {
+   * //   b: {
+   * //     d: [2,3]
+   * //   }
+   * // }
+   * //]
    *
    * @param {object} subject The object to expand
-   * @returns {object|object[]} The expanded object or array of objects.
+   * @returns {object|any[]} The expanded object or array of objects.
    */
   expand: function(subject, depth = 1){
     let res;
     subject = makeFlattenedShallow(subject);
 
-    // Determine if an array is represented by the flattened object
-    let rootObjectPresent = true;
-    if(depth === 1) {
-      rootObjectPresent = false;
-      for(let key in subject) {
-        let rootArrayPresent = key.match(/^\d/ig);
+    let keyChains =  ob.keys(subject);
 
-        rootObjectPresent = (rootObjectPresent || !rootArrayPresent);
+    let isArray = false;
+    if(true) {
+      for(let i of keyChains) {
+        if(i.startsWith('[]')) {
+          isArray = true;
+        }
       }
     }
 
-    if(rootObjectPresent === false && depth === 1) {
+    // if a top level array, things need to be handled just a little bit differently
+    if(isArray) {
       res = [];
-      for(let key in subject) {
-        res.push(subject[key]);
-      }
-    } else {
-      let keyChains =  ob.keys(subject);
+      for(let keyChain of keyChains) {
+        // This converts something like []0.name.name or []0[].name.name to 0
+        const firstKey = keyChain.split('.')[0]; // eg []0[]
+        const fullIndex = firstKey.substr(2); // eg. 0[]
+        const index = fullIndex.replace('[]', ''); // eg 0
+        const nestedKeyChain = keyChain.replace(firstKey + '.', '');
 
+        let tmp = {};
+        // Make sure tmp is set correctly based on the object type
+        if(type(res[index]) === 'array' || fullIndex.endsWith('[]')) {
+          tmp['[]'+nestedKeyChain] = subject[keyChain];
+        } else {
+          tmp[nestedKeyChain] = subject[keyChain];
+        }
+
+        if(keyChain.split('.').length === 1) {
+          // If there is no nested data just add to the array
+          res[index] = subject[keyChain];
+        } else if(type(res[index]) === 'object' || type(res[index]) === 'array') {
+          // If the next keyChain is an object
+          res[index] = ob.merge(res[index], ob.expand(tmp, depth+1));
+        } else if(fullIndex.endsWith('[]')) {
+          res[index] = ob.expand(tmp, depth+1);
+        } else {
+          res[index] = ob.expand(tmp, depth+1);
+        }
+      }
+    } else if(keyChains.length === 1) {
       // When the object is just {'example.example': y}
       // One key and one value
-      if(keyChains.length === 1) {
-        let tmp = {};
-        let keyChain = keyChains[0]; // something like 'first.another.another'
-        let value = subject[keyChain];
-        let count;
+      let tmp = {};
+      let keyChain = keyChains[0]; // something like 'first.another.another'
+      let value = subject[keyChain];
+      let count;
 
-        res = tmp; // Poining to tmp so that we have a place holder before nesting
-        count = 1;
-        let keys = keyChain.split('.');
-        for(let key of keys) {
-          if(count === keys.length) {
-            tmp[key] = value;
+      res = tmp; // Pointing to tmp so that we have a place holder before nesting
+      count = 1;
+      let keys = keyChain.split('.');
+      for(let key of keys) {
+        if(count === keys.length) {
+          tmp[key] = value;
+        } else {
+          let isArray = contains(key, '[]');
+          if(isArray) {
+            key = key.replace('[]','');
+            tmp[key] = [];
           } else {
-            let isArray = contains(key, '[]');
-            if(isArray) {
-              key = key.replace('[]','');
-              tmp[key] = [];
-            } else {
-              tmp[key] = {};
-            }
-
-            tmp = tmp[key];
+            tmp[key] = {};
           }
-          count++;
-        }
 
-      } else {
-        // If multiple keychains in the object, simplify our logic a bit
-        res = {};
-        for(let i in subject) {
-          let tmp = {};
-          tmp[i] = subject[i];
-          res = merge(res, ob.expand(tmp, ++depth));
+          tmp = tmp[key];
         }
+        count++;
+      }
+
+    } else {
+      // If multiple keychains in the object, simplify our logic a bit
+      res = {};
+      for(let i in subject) {
+        let tmp = {};
+        tmp[i] = subject[i];
+        res = ob.merge(res, ob.expand(tmp, depth+1));
       }
     }
     return res;
@@ -171,49 +249,68 @@ let ob = {
    *
    * ob.flatten(x)
    * // → {
-   *  'a.b.c': 1,
-   *  'a.b.d': [2,3]
-   *  'a.b.d[].0': 2,
-   *  'a.b.d[].1': 3',
-   * }
+   * // 'a.b.c': 1,
+   * // 'a.b.d': [2,3]
+   * // 'a.b.d[].0': 2,
+   * // 'a.b.d[].1': 3',
+   * //}
    *
-   * @param {object|object[]} subject The object or array of objects to perform the flattening on
+   * @example
+   * let x = [
+   *  [{
+   *    a: {
+   *      b: {
+   *        c: 1,
+   *      },
+   *    },
+   *  }],
+   *  {
+   *    b: {
+   *      d: [2,3]
+   *    }
+   *  }
+   * ]
+   *
+   * // → {
+   * // '[]0[].0.a.b.c': 1,
+   * // '[]1.b.d': [2,3]
+   * // '[]1.b.d[].0': 2
+   * // '[]1.b.d[].1': 3
+   * //}
+   *
+   *
+   * @param {object|any[]} subject The object or array of objects to perform the flattening on
    * @returns {object} The flat representation of the object
    */
   flatten: function(subject, prefix='', depth = 1){
-    let res;
+    let res = {};
 
-    if(type(subject) === 'array' && depth === 1) {
-      res = [];
+    if(type(subject) === 'object' || type(subject) === 'array'){
+      for(let i in subject) {
+        let tmpPrefix;
+        if(prefix === '') {
+          tmpPrefix = `${i}`;
+        } else {
+          tmpPrefix = `${prefix}.${i}`;
+        }
+        // If we're dealing with an array at the top level, we need to prefix it with [] to make it clear that we're dealing with
+        // an array as opposed to an object
+        if(depth === 1 && type(subject) === 'array') {
+          tmpPrefix = `[]${tmpPrefix}`;
+        }
 
-      for(let i of subject){
-        res = res.concat(ob.flatten(i, prefix, ++depth));
-      }
+        if(type(subject[i]) === 'array') {
+          tmpPrefix = tmpPrefix + '[]';
+        }
 
-      return res;
-    } else {
-      res = {};
+        res[tmpPrefix] = subject[i];
 
-      if(type(subject) === 'object' || type(subject) === 'array'){
-
-        for(let i in subject) {
-          let tmpPrefix;
-          if(prefix === '') {
-            tmpPrefix = `${i}`;
-          } else {
-            tmpPrefix = `${prefix}.${i}`;
-          }
-
-          if(type(subject[i]) === 'array') {
-            tmpPrefix = tmpPrefix + '[]';
-          }
-
-          res[tmpPrefix] = subject[i];
-
-          res = merge(res, ob.flatten(subject[i],tmpPrefix, ++depth));
+        if(type(subject[i]) === 'array' || type(subject[i]) === 'object') {
+          res = ob.merge(res, ob.flatten(subject[i],tmpPrefix, depth+1));
         }
       }
     }
+
     return res;
   },
   /**
@@ -235,10 +332,11 @@ let ob = {
    * ob.keys(x)
    * // → ['a','b','c', 'd']
    *
-   * @param {object|object[]} subject The object or array of objects whose keys you wish to retrieve.
+   * @param {object|any[]} subject The object or array of objects whose keys you wish to retrieve.
+   * @param {boolean} [unique=true] Whether the result should contain duplicates or not
    * @returns {string[]} The keys
    */
-  keys:function(subject) {
+  keys:function(subject, unique=true) {
     let keys = [];
 
     if(type(subject) === 'array') {
@@ -246,15 +344,17 @@ let ob = {
         keys = keys.concat(ob.keys(i));
       }
 
-      return uniques(keys);
     } else if(type(subject) === 'object') {
       for(let k in subject) {
         keys = keys.concat(ob.keys(k));
       };
-      return uniques(keys);
     } else {
       keys.push(subject);
+    }
+    if(unique) {
       return uniques(keys);
+    } else {
+      return keys;
     }
   },
   /**
@@ -270,100 +370,141 @@ let ob = {
    *   e: [undefined, 1, 2]
    * }
    *
-   * ob.removeUndefs(x)
+   * ob.filter(x)
    * // → {
-   *   b: {
-   *     d: 2,
-   *   },
-   *   e: [1, 2]
-   * }
+   * //  b: {
+   * //    d: 2,
+   * //  },
+   * //  e: [1, 2]
+   * //}
    *
    *
-   * @param {object|object[]} subject The object or array of objects you would like to remove undefined values from.
-   * @returns {object|object[]} The object or array of objects without any undefined values
+   * @param {object|any[]} subject The object or array of objects you would like to remove undefined values from.
+   * @param {function} validate The function to perform for the filter.
+   * @returns {object|any[]} The object or array of objects without any undefined values
    */
-  removeUndefs: (subject) => {
-    // Make sure we don't mutate the original object
+  filter: (subject, validate) => {
     subject = ob.clone(subject);
 
     let res;
-
     if(type(subject) === 'array') {
       res = [];
       for(let key in subject) {
-        if(subject[key] === undefined) {
-        } else {
-          res.push(ob.removeUndefs(subject[key]));
+        if(validate(subject[key])) {
+          res.push(ob.filter(subject[key], validate));
         }
       }
+      subject = res;
     } else if(type(subject) === 'object') {
       for(let key in subject) {
-        if(subject[key] === undefined) {
-          delete subject[key];
+        if(validate(subject[key]) === true ) {
+          subject[key] = ob.filter(subject[key], validate);
         } else {
-          subject[key] = ob.removeUndefs(subject[key]);
+          delete subject[key];
         }
       }
-
-      return subject;
-    } else {
-      return subject;
     }
 
-    return res;
+    return subject;
   },
   /**
-   * Returns an object only with the given keys. If an array is passed, it will return an array of each given object only having the selected keys.
+   * Merges the enumerable attributes of two objects deeply.
    *
-   * @example <caption>Basic usage.</caption>
+   * @example
    * let x = {
-   *  a: 1,
-   *  b: 2,
-   *  c: 3,
+   *  a: {b: 1},
    * }
    *
-   * ob.select(x, ['a','b']);
-   * // → {a: 1, b: 2}
+   * let y = {
+   *  a: {c: 1},
+   * }
    *
-   * @example <caption>Advanced usage.</caption>
+   * ob.merge(x, y);
+   * // → {a: {b: 1, c:1}}
+   *
+   * @param {object|any[]} target The object or array of objects to merge into
+   * @param {object|any[]} src The object or array of objects to merge from
+   * @returns {object|any[]} The merged object or array
+   */
+  merge: function(target, src) {
+    let array = Array.isArray(src);
+    let dst = array && [] || {};
+
+    if (array) {
+      target = target || [];
+      dst = dst.concat(target);
+      src.forEach((e, i) => {
+        if (typeof dst[i] === 'undefined') {
+          dst[i] = e;
+        } else if (typeof e === 'object') {
+          dst[i] = ob.merge(target[i], e);
+        } else {
+          if (target.indexOf(e) === -1) {
+            dst.push(e);
+          }
+        }
+      });
+    } else {
+      if (target && typeof target === 'object') {
+        Object.keys(target).forEach((key) => {
+          dst[key] = target[key];
+        });
+      }
+      Object.keys(src).forEach((key) => {
+        if (typeof src[key] !== 'object' || !src[key]) {
+          dst[key] = src[key];
+        }
+        else {
+          if (!target[key]) {
+            dst[key] = src[key];
+          } else {
+            dst[key] = ob.merge(target[key], src[key]);
+          }
+        }
+      });
+    }
+
+    return dst;
+  },
+  /**
+   * Returns an object only with the given keys. If an array is passed, it will return an array of each given object only having the picked keys.
+   *
+   * @example
    * let x = {
    *  c: 3,
    *  d: {e: 4, f: [5,6]},
    *  g: [7, 8]
    * }
    *
-   * ob.select(x, ['d.e','d.f[].0','g[].1']);
+   * ob.pick(x, ['d.e','d.f[].0','g[].1']);
    * // → {d: {e: 4, f: [5]}, g: [8]}
    *
-   * @param {object|object[]} subject The object or array of objects to perform the select operation on
-   * @param {string[]} keys The keys you would like to select
-   * @returns {object|object[]} The object or array of objects with only the selected keys.
+   * @param {object|any[]} subject The object or array of objects to perform the pick operation on
+   * @param {string|string[]} keys The keys you would like to pick
+   * @returns {object|any[]} The object or array of objects with only the picked keys.
    */
-  select: (subject, keys = []) => {
+  pick: (subject, keys = []) => {
     let resp;
 
-    if(type(subject) === 'array') {
-      resp = [];
+    resp = {};
 
-      for(let i of subject){
-        resp = resp.concat(ob.select(i, keys));
-      }
-    } else {
-      resp = {};
+    let flat = ob.flatten(subject);
 
-      let flat = ob.flatten(subject);
-
-      for (let actualKey in flat){
+    for (let actualKey in flat){
+      if(type(keys) === 'array') {
         for (let desiredKey of keys){
           if(actualKey === desiredKey) {
             resp[actualKey] = flat[actualKey];
           }
         }
+      } else if(type(keys) === 'string') {
+        if(actualKey === keys) {
+          resp[actualKey] = flat[actualKey];
+        }
       }
-      resp = ob.expand(resp);
     }
 
-    return resp;
+    return ob.expand(resp);
   },
   /**
    * Returns all values for a given object or array recursively.
@@ -389,10 +530,11 @@ let ob = {
    * ob.values(x)
    * // → [1, 2, 3, 4]
    *
-   * @param {object|object[]} subject The object or array of objects to get the values of
+   * @param {object|any[]} subject The object or array of objects to get the values of
+   * @param {boolean} [unique=true] Whether the result should contain duplicates or not
    * @returns {any[]}
    */
-  values:(subject) => {
+  values:(subject, unique=true) => {
     let values = [];
 
     if(type(subject) === 'array') {
@@ -400,15 +542,17 @@ let ob = {
         values = values.concat(ob.values(i));
       }
 
-      return uniques(values);
     } else if(type(subject) === 'object') {
       for(let k in subject) {
         values = values.concat(ob.values(subject[k]));
       };
-      return uniques(values);
     } else {
       values.push(subject);
+    }
+    if(unique) {
       return uniques(values);
+    } else {
+      return values;
     }
   },
 };

@@ -12,5 +12,9 @@ import ob from 'objob';
   * [Changelog](./CHANGELOG.md)
   * [Contributing](./CONTRIBUTING.md)
 
+## Special Thanks
+
+  * [Kyle Matthews - Merge](https://github.com/KyleAMathews/deepmerge)
+
 ## License
 MIT

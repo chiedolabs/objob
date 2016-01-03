@@ -20,7 +20,6 @@
     "url": "https://github.com/chiedolabs/objob.git"
   },
   "dependencies": {
-    "deepmerge": "^0.2.10",
     "string-contains": "^0.1.0",
     "type-of": "^2.0.1",
     "uniques": "0.0.1"
