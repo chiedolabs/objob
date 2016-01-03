@@ -71,19 +71,6 @@ describe('Objob', () => {
     });
   });
 
-  describe('many', () => {
-    it('should return the correct number of objects', (done) => {
-      expect(ob.many(ob1)).to.deep.equal([ob1,ob1]);
-      expect(ob.many(ob1, 5)).to.deep.equal([ob1,ob1,ob1,ob1,ob1]);
-      done();
-    });
-
-    it('should return the array if an array', (done) => {
-      expect(ob.many(obArr1)).to.equal(obArr1);
-      done();
-    });
-  });
-
   describe('select', () => {
     it('should return the object only select the given keys', (done) => {
       expect(ob.select(ob1, ['name'])).to.deep.equal({name: ob1.name});
@@ -176,18 +163,6 @@ describe('Objob', () => {
     it('should return a clone of the object', (done) => {
       expect(ob.cloneDeep(ob3)).to.deep.equal(ob3);
       expect(ob.cloneDeep(ob3)).to.not.equal(ob3);
-      done();
-    });
-  });
-
-  describe('Chaining', () => {
-    it('should return many of an object after filtering select select', (done) => {
-      expect(ob.many(ob.select(ob1, ['name', 'age']),3))
-      .to.deep.equal([
-        {age: ob1.age, name: ob1.name},
-        {age: ob1.age, name: ob1.name},
-        {age: ob1.age, name: ob1.name},
-      ]);
       done();
     });
   });

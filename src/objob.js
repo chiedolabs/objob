@@ -258,38 +258,6 @@ let ob = {
     }
   },
   /**
-   * Returns many of the object. If an array is passed, it will just return
-   * the given array.
-   *
-   * @example
-   * let x = {
-   *   a: 1,
-   *   b: 2,
-   *   c: 3
-   * }
-   *
-   * ob.many(x)
-   * // → [{a:1,b:2,c:3},{a:1,b:2,c:3}]
-   *
-   *
-   * @param {object} subject The object you would like many of
-   * @param {integer} num the number of desired objects
-   * @returns {object[]} An array with n copies of your object.
-   */
-  many: (subject, num = 2) => {
-    let arr = [];
-
-    if(type(subject) === 'array') {
-      return subject;
-    } else {
-      for(let i = 0; i < num; i++){
-        arr.push(subject);
-      }
-    }
-
-    return arr;
-  },
-  /**
    * Removes all keys with undefined values from an object.
    *
    * @example
