@@ -151,7 +151,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".cloneDeep">
               
-              ob.cloneDeep<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object}</span>
+              ob.cloneDeep<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
           </h4>
       
       </div>
@@ -162,7 +162,7 @@
       
       
       <div class="description">
-          <p>Performs a deep clone of an object</p>
+          <p>Performs a deep clone of an object or array.</p>
       </div>
       
 
@@ -185,6 +185,9 @@
             
             (
 <span class="param-type">object</span>
+|
+
+<span class="param-type">Array.&lt;object></span>
 
 )
             
@@ -193,7 +196,7 @@
             <td class="description last">
                 
                 
-                  <span class="param-desc">: <p>The object to clone.</p>
+                  <span class="param-desc">: <p>The object or array to clone.</p>
                     
                   </span>
                 
@@ -251,12 +254,15 @@
             (
             
                         object
+                         | 
+                    
+                        Array.&lt;object>
                         
                     
             </td>
             )
             
-            <td class="description last">: The cloned object</td>
+            <td class="description last">: The cloned object or arraay</td>
             
         </tr>
     
@@ -285,7 +291,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".deselect">
               
-              ob.deselect<span class="signature">(subject, keys)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object}</span>
+              ob.deselect<span class="signature">(subject, keys)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
           </h4>
       
       </div>
@@ -296,7 +302,7 @@
       
       
       <div class="description">
-          <p>Returns an object without the given keys.</p>
+          <p>Returns an object without the given keys or an array with each object not having the given keys.</p>
       </div>
       
 
@@ -319,6 +325,9 @@
             
             (
 <span class="param-type">object</span>
+|
+
+<span class="param-type">Array.&lt;object></span>
 
 )
             
@@ -327,7 +336,7 @@
             <td class="description last">
                 
                 
-                  <span class="param-desc">: <p>The object to perform the deselect operation on.</p>
+                  <span class="param-desc">: <p>The object or array to perform the deselect operation on.</p>
                     
                   </span>
                 
@@ -409,12 +418,15 @@
             (
             
                         object
+                         | 
+                    
+                        Array.&lt;object>
                         
                     
             </td>
             )
             
-            <td class="description last">: The object without the deselected keys</td>
+            <td class="description last">: The object or array of objects without the deselected keys</td>
             
         </tr>
     
@@ -453,7 +465,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".expand">
               
-              ob.expand<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object}</span>
+              ob.expand<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
           </h4>
       
       </div>
@@ -464,7 +476,7 @@
       
       
       <div class="description">
-          <p>Takes a flattened object  and expands it back to a full object.</p>
+          <p>Takes a flattened object and expands it back to a full object or array of objects.</p>
       </div>
       
 
@@ -553,12 +565,15 @@
             (
             
                         object
+                         | 
+                    
+                        Array.&lt;object>
                         
                     
             </td>
             )
             
-            <td class="description last">: The expanded object.</td>
+            <td class="description last">: The expanded object or array of objects.</td>
             
         </tr>
     
@@ -621,6 +636,9 @@
             
             (
 <span class="param-type">object</span>
+|
+
+<span class="param-type">Array.&lt;object></span>
 
 )
             
@@ -629,7 +647,7 @@
             <td class="description last">
                 
                 
-                  <span class="param-desc">: <p>The object to perform the flattening on</p>
+                  <span class="param-desc">: <p>The object or array of objects to perform the flattening on</p>
                     
                   </span>
                 
@@ -732,7 +750,7 @@
       
       
       <div class="description">
-          <p>Return all keys for an object recursively, including in arrays.</p>
+          <p>Return all keys for an object recursively, including keys in objects that are in arrays.</p>
       </div>
       
 
@@ -755,6 +773,9 @@
             
             (
 <span class="param-type">object</span>
+|
+
+<span class="param-type">Array.&lt;object></span>
 
 )
             
@@ -763,7 +784,7 @@
             <td class="description last">
                 
                 
-                  <span class="param-desc">: <p>The object whose keys you wish to retrieve.</p>
+                  <span class="param-desc">: <p>The object or array of objects whose keys you wish to retrieve.</p>
                     
                   </span>
                 
@@ -861,7 +882,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".removeUndefs">
               
-              ob.removeUndefs<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object}</span>
+              ob.removeUndefs<span class="signature">(subject)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
           </h4>
       
       </div>
@@ -872,7 +893,7 @@
       
       
       <div class="description">
-          <p>Removes all keys with undefined values from an object.</p>
+          <p>Removes all keys with undefined values from an object and/or arrays of objects.</p>
       </div>
       
 
@@ -895,6 +916,9 @@
             
             (
 <span class="param-type">object</span>
+|
+
+<span class="param-type">Array.&lt;object></span>
 
 )
             
@@ -903,7 +927,7 @@
             <td class="description last">
                 
                 
-                  <span class="param-desc">: <p>The object you would like to remove undefined values from.</p>
+                  <span class="param-desc">: <p>The object or array of objects you would like to remove undefined values from.</p>
                     
                   </span>
                 
@@ -961,12 +985,15 @@
             (
             
                         object
+                         | 
+                    
+                        Array.&lt;object>
                         
                     
             </td>
             )
             
-            <td class="description last">: The object without any undefined values</td>
+            <td class="description last">: The object or array of objects without any undefined values</td>
             
         </tr>
     
@@ -995,7 +1022,7 @@
       <div class="nameContainer">
           <h4 class="name" id=".select">
               
-              ob.select<span class="signature">(subject, keys)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object}</span>
+              ob.select<span class="signature">(subject, keys)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object|Array.&lt;object>}</span>
           </h4>
       
       </div>
@@ -1006,7 +1033,7 @@
       
       
       <div class="description">
-          <p>Returns an object only with the given keys.</p>
+          <p>Returns an object only with the given keys. If an array is passed, it will return an array of each given object only having the selected keys.</p>
       </div>
       
 
@@ -1029,6 +1056,9 @@
             
             (
 <span class="param-type">object</span>
+|
+
+<span class="param-type">Array.&lt;object></span>
 
 )
             
@@ -1037,7 +1067,7 @@
             <td class="description last">
                 
                 
-                  <span class="param-desc">: <p>The object to perform the select operation on</p>
+                  <span class="param-desc">: <p>The object or array of objects to perform the select operation on</p>
                     
                   </span>
                 
@@ -1119,12 +1149,15 @@
             (
             
                         object
+                         | 
+                    
+                        Array.&lt;object>
                         
                     
             </td>
             )
             
-            <td class="description last">: The object only with the selected keys.</td>
+            <td class="description last">: The object or array of objects with only the selected keys.</td>
             
         </tr>
     
@@ -1174,7 +1207,7 @@
       
       
       <div class="description">
-          <p>Returns all values for a given object recursively.</p>
+          <p>Returns all values for a given object or array recursively.</p>
       </div>
       
 
@@ -1197,6 +1230,9 @@
             
             (
 <span class="param-type">object</span>
+|
+
+<span class="param-type">Array.&lt;object></span>
 
 )
             
@@ -1205,7 +1241,7 @@
             <td class="description last">
                 
                 
-                  <span class="param-desc">: <p>The object to get the values of</p>
+                  <span class="param-desc">: <p>The object or array of objects to get the values of</p>
                     
                   </span>
                 
@@ -1311,7 +1347,7 @@
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Jan 02 2016 22:25:29 GMT-0500 (EST)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Jan 02 2016 22:34:08 GMT-0500 (EST)
         </footer>
     </div>
 </div>

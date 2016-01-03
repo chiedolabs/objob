@@ -12,7 +12,7 @@ import { makeFlattenedShallow } from './functions';
  * */
 let ob = {
   /**
-   * Performs a deep clone of an object
+   * Performs a deep clone of an object or array.
    *
    * @example
    * let x = {
@@ -25,14 +25,14 @@ let ob = {
    * y === x
    * // → false
    *
-   * @param {object} subject The object to clone.
-   * @returns {object} The cloned object
+   * @param {object|object[]} subject The object or array to clone.
+   * @returns {object|object[]} The cloned object or arraay
    */
   cloneDeep: function(subject){
     return ob.expand(ob.flatten(subject));
   },
   /**
-   * Returns an object without the given keys.
+   * Returns an object without the given keys or an array with each object not having the given keys.
    * @example <caption>Basic usage.</caption>
    * let x = {
    *  a: 1,
@@ -52,9 +52,9 @@ let ob = {
    * ob.deselect(x, ['d.e','d.f[].0','g[].1']);
    * // → {c: 3, d: {f:[6]}, g:[7]}
    *
-   * @param {object} subject The object to perform the deselect operation on.
+   * @param {object|object[]} subject The object or array to perform the deselect operation on.
    * @param {string[]} keys The keys of the object or nested object that you would like to deselect.
-   * @returns {object} The object without the deselected keys
+   * @returns {object|object[]} The object or array of objects without the deselected keys
    */
   deselect: function(subject, keys = []){
     let allKeys = ob.keys(ob.flatten(subject));
@@ -77,7 +77,7 @@ let ob = {
     return ob.select(subject, keysToKeep);
   },
   /**
-   * Takes a flattened object  and expands it back to a full object.
+   * Takes a flattened object and expands it back to a full object or array of objects.
    *
    * @example
    * let x = {
@@ -91,7 +91,7 @@ let ob = {
    * // → {a: {b: {c: 1, d: [2,3]}}}
    *
    * @param {object} subject The object to expand
-   * @returns {object} The expanded object.
+   * @returns {object|object[]} The expanded object or array of objects.
    */
   expand: function(subject, depth = 1){
     let res;
@@ -177,7 +177,7 @@ let ob = {
    *  'a.b.d[].1': 3',
    * }
    *
-   * @param {object} subject The object to perform the flattening on
+   * @param {object|object[]} subject The object or array of objects to perform the flattening on
    * @returns {object} The flat representation of the object
    */
   flatten: function(subject, prefix='', depth = 1){
@@ -217,7 +217,7 @@ let ob = {
     return res;
   },
   /**
-   * Return all keys for an object recursively, including in arrays.
+   * Return all keys for an object recursively, including keys in objects that are in arrays.
    *
    * @example
    * let x = {
@@ -235,7 +235,7 @@ let ob = {
    * ob.keys(x)
    * // → ['a','b','c', 'd']
    *
-   * @param {object} subject The object whose keys you wish to retrieve.
+   * @param {object|object[]} subject The object or array of objects whose keys you wish to retrieve.
    * @returns {string[]} The keys
    */
   keys:function(subject) {
@@ -258,7 +258,7 @@ let ob = {
     }
   },
   /**
-   * Removes all keys with undefined values from an object.
+   * Removes all keys with undefined values from an object and/or arrays of objects.
    *
    * @example
    * let x = {
@@ -279,8 +279,8 @@ let ob = {
    * }
    *
    *
-   * @param {object} subject The object you would like to remove undefined values from.
-   * @returns {object} The object without any undefined values
+   * @param {object|object[]} subject The object or array of objects you would like to remove undefined values from.
+   * @returns {object|object[]} The object or array of objects without any undefined values
    */
   removeUndefs: (subject) => {
     // Make sure we don't mutate the original object
@@ -313,7 +313,7 @@ let ob = {
     return res;
   },
   /**
-   * Returns an object only with the given keys.
+   * Returns an object only with the given keys. If an array is passed, it will return an array of each given object only having the selected keys.
    *
    * @example <caption>Basic usage.</caption>
    * let x = {
@@ -335,9 +335,9 @@ let ob = {
    * ob.select(x, ['d.e','d.f[].0','g[].1']);
    * // → {d: {e: 4, f: [5]}, g: [8]}
    *
-   * @param {object} subject The object to perform the select operation on
+   * @param {object|object[]} subject The object or array of objects to perform the select operation on
    * @param {string[]} keys The keys you would like to select
-   * @returns {object} The object only with the selected keys.
+   * @returns {object|object[]} The object or array of objects with only the selected keys.
    */
   select: (subject, keys = []) => {
     let resp;
@@ -366,7 +366,7 @@ let ob = {
     return resp;
   },
   /**
-   * Returns all values for a given object recursively.
+   * Returns all values for a given object or array recursively.
    *
    * @example
    * let x = {
@@ -389,7 +389,7 @@ let ob = {
    * ob.values(x)
    * // → [1, 2, 3, 4]
    *
-   * @param {object} subject The object to get the values of
+   * @param {object|object[]} subject The object or array of objects to get the values of
    * @returns {any[]}
    */
   values:(subject) => {
