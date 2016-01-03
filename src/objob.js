@@ -21,14 +21,14 @@ let ob = {
    *  c: 3,
    * }
    *
-   * y = ob.cloneDeep(x)
+   * y = ob.clone(x)
    * y === x
    * // → false
    *
    * @param {object|object[]} subject The object or array to clone.
    * @returns {object|object[]} The cloned object or arraay
    */
-  cloneDeep: function(subject){
+  clone: function(subject){
     return ob.expand(ob.flatten(subject));
   },
   /**
@@ -284,7 +284,7 @@ let ob = {
    */
   removeUndefs: (subject) => {
     // Make sure we don't mutate the original object
-    subject = ob.cloneDeep(subject);
+    subject = ob.clone(subject);
 
     let res;
 
