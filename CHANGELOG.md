@@ -1,3 +1,18 @@
+## <sub>v2.4.0</sub>
+
+#### *Jan.4, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/5bba647804e42225c74ec771a1426eab8f210716/docs/ob.html)
+
+- Updated to match the lodash naming
+- Made the omit and pick functions more flexible
+- Fixed bug with expand
+- Fixed  glitch with flatten
+- More tests
+- added merge to the lib
+- fixed some of the type issues
+- Added Kyle as special thanks
+- Drastically improved docs
+
+
 ## <sub>v2.2.0</sub>
 
 #### *Jan.2, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/c60ab4664b3a545b2c74f51a6109834906df1741/docs/ob.html)
