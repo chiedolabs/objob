@@ -1,4 +1,4 @@
-# Ob Job
+# Ob Job (beta)
 
 A library of deep/recursive utilities for nested objects. Many functions will be similar to the object functions in lodash but will be deep/recursive versions.
 
@@ -11,6 +11,10 @@ import ob from 'objob';
   * [API Documentation](https://rawgit.com/chiedolabs/objob/master/docs/ob.html)
   * [Changelog](./CHANGELOG.md)
   * [Contributing](./CONTRIBUTING.md)
+
+## Bugs
+
+Objob is still in beta so please submit issues if you find any bugs.
 
 ## Special Thanks
 

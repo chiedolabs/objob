@@ -22,7 +22,7 @@
 		"default": {
 			"outputSourceFiles" : false
 		},
-		"applicationName": "Ob Job",
+		"applicationName": "Ob Job (beta)",
 		"disqus": "",
 		"googleAnalytics": "",
 		"openGraph": {
