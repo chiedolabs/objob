@@ -16,6 +16,10 @@ import ob from 'objob';
 
 Objob is still in beta so please submit issues if you find any bugs.
 
+## Roadmap
+
+ * It is on the todo list to port over all of the lodash Object functions and make them recursive. So much to do, so little time.
+
 ## Special Thanks
 
   * [Kyle Matthews - Merge](https://github.com/KyleAMathews/deepmerge)
