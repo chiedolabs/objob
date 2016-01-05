@@ -56,11 +56,16 @@ describe('expand', () => {
     expect(ob.expand(ob.flatten(ob3))).to.deep.equal(ob3);
     expect(ob.expand(ob.flatten(ob2))).to.deep.equal(ob2);
     expect(ob.expand(ob.flatten(ob4))).to.deep.equal(ob4);
+    expect(ob.expand(ob.flatten({tmp: arr4}))).to.deep.equal({tmp: arr4});
+    done();
+  });
+
+  it('should return the expanded array', (done) => {
     expect(ob.expand(ob.flatten(arr2))).to.deep.equal(arr2);
     expect(ob.expand(ob.flatten(arr1))).to.deep.equal(arr1);
     expect(ob.expand(ob.flatten(arr3))).to.deep.equal(arr3);
     expect(ob.expand(ob.flatten(arr4))).to.deep.equal(arr4);
-    expect(ob.expand(ob.flatten({tmp: arr4}))).to.deep.equal({tmp: arr4});
+    expect(ob.expand(ob.flatten([[[arr4]]]))).to.deep.equal([[[arr4]]]);
     done();
   });
 });
