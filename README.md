@@ -1,14 +1,32 @@
 # Ob Job (beta)
 
-A library of deep/recursive utilities for nested objects. Many functions will be similar to the object functions in lodash but will be deep/recursive versions.
+A library of deep/recursive utilities for nested objects.
 
-```bash
-import ob from 'objob';
-```
+Many functions will be similar to the object functions in lodash but will be deep/recursive versions.
+
+Ob Job includes the following functions and many more with every function being a deep/recursive implementation:
+
+* clone
+* equals
+* expand
+* filter
+* flatten
+* keys
+* merge
+* omit
+* pick
+* values
+* [More...](https://rawgit.com/chiedolabs/objob/master/docs/index.html)
+
+## Installation
+	npm install objob
+	
+## Usage
+	import ob from 'objob';
 
 ## Further Reading
 
-  * [API Documentation](https://rawgit.com/chiedolabs/objob/master/docs/ob.html)
+  * [API Documentation](https://rawgit.com/chiedolabs/objob/master/docs/index.html)
   * [Changelog](./CHANGELOG.md)
   * [Contributing](./CONTRIBUTING.md)
 

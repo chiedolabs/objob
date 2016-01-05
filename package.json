@@ -7,7 +7,7 @@
     "test": "mocha test --recursive --compilers js:babel-core/register --reporter spec ",
     "build": "./node_modules/babel-cli/bin/babel.js -d lib src/",
     "prepublish": "npm run build",
-    "generate-docs": "jsdoc --configure .jsdoc.json --verbose"
+    "generate-docs": "jsdoc --configure .jsdoc.json --verbose --readme DOCREADME.md"
   },
   "keywords": [
     "Node",
@@ -31,7 +31,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "chai": "^3.4.1",
     "jsdoc": "^3.4.0",
-    "minimal-jsdoc": "0.0.1",
+    "minimal-jsdoc": "^0.1.0",
     "mocha": "^2.3.4"
   }
 }

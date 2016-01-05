@@ -103,9 +103,6 @@ li {
   padding-left: 8px;
   margin-top: 2px;
 }
-.navigation li.item .itemMembers {
-  display: none;
-}
 .main {
   padding: 20px 20px;
   margin-left: 250px;
@@ -375,3 +372,4 @@ footer {
   font-size: 0.8em;
   color: gray;
 }
+
