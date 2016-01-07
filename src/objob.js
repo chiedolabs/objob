@@ -453,6 +453,35 @@ let ob = {
     return subject;
   },
   /**
+   * Returns the object with each value being run throuh the function. (Better description needed. lol)
+   *
+   * @example
+   *
+   * let x = {
+   *  a: 1,
+   *  d: {f: 4}
+   * }
+   *
+   * ob.mapValues(x, (x) => x*3 )
+   * // → {
+   * // a: 3,
+   * // d: {f: 12}
+   * //}
+   * @param {object|any[]} subject The object or array to compare to
+   * @param {function} func The function to operate on each value
+   * @returns {object|any[]}
+   */
+  mapValues: function(subject, func){
+    subject = ob.flatten(subject);
+    let shallowSubject = makeFlattenedShallow(subject);
+
+    for(let key of Object.keys(shallowSubject)) {
+      shallowSubject[key] = func(shallowSubject[key]);
+    }
+
+    return ob.expand(shallowSubject);
+  },
+  /**
    * Merges the enumerable attributes of two objects deeply.
    *
    * @example
