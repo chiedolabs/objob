@@ -1,9 +1,9 @@
 ## <sub>v2.7.0</sub>
 
-#### *Jan.4, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/2a9beb09cd586fc171666d55ab912192c10e7fc9/docs/index.html)
+#### *Jan.7, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/8a8ec54420d8a00b573805faeceb77e8dfcbb60a/docs/index.html)
 
-- Added equals function
-- 
+- Added mapValues function
+ 
 ## <sub>v2.5.0</sub>
 
 #### *Jan.4, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/2a9beb09cd586fc171666d55ab912192c10e7fc9/docs/index.html)
