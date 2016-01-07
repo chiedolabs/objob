@@ -1,3 +1,9 @@
+## <sub>v2.7.0</sub>
+
+#### *Jan.4, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/2a9beb09cd586fc171666d55ab912192c10e7fc9/docs/index.html)
+
+- Added equals function
+- 
 ## <sub>v2.5.0</sub>
 
 #### *Jan.4, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/2a9beb09cd586fc171666d55ab912192c10e7fc9/docs/index.html)
