@@ -1,3 +1,9 @@
+## <sub>v2.7.2</sub>
+
+#### *Jan.8, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/e70e409c4cd1e89dfc4bc0c56fc412c9680aee66/docs/index.html)
+
+- Fixed makeFlattenedShallow
+
 ## <sub>v2.7.1</sub>
 
 #### *Jan.8, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/e70e409c4cd1e89dfc4bc0c56fc412c9680aee66/docs/index.html)
