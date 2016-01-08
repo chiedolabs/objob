@@ -1,6 +1,6 @@
 ## <sub>v2.7.1</sub>
 
-#### *Jan.8, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/4266ab2363afe07058bc65adf3dfd889593f6e58/docs/index.html)
+#### *Jan.8, 2016* — [Docs](https://rawgit.com/chiedolabs/objob/e70e409c4cd1e89dfc4bc0c56fc412c9680aee66/docs/index.html)
 
 - Fixed minor bug with expand
 - Better Map Values Tests and bug fix
