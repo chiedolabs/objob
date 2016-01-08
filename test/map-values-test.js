@@ -4,21 +4,15 @@ import { expect } from 'chai';
 import ob from '../src/objob';
 
 describe('clone', () => {
-  let ob1, ob2, ob3;
-  let arr2, arr1;
+  let ob1, ob3;
 
   before((done) => {
     ob1 = {
       name: 'Bob',
       age: 22,
       weight: 170,
-    };
-
-    ob2 = {
-      name: 'Bob',
-      feet: 5,
-      age: 100,
-      weight: 170,
+      ob: {},
+      arr: [],
     };
 
     ob3 = {
@@ -29,11 +23,8 @@ describe('clone', () => {
           toes: 2,
         },
       },
-      eyes: [{location: 'left', color: 'blue'}, {location: 'right', color: 'red'}],
+      eyes: [{location: 'left', color: 'blue'}, {location: 'right', color: 'red'}, 1,2],
     };
-
-    arr1 = [3, 1];
-    arr2 = [ob1, ob2];
 
     done();
   });
@@ -43,14 +34,39 @@ describe('clone', () => {
       name: ob1.name * 3,
       age: ob1.age * 3,
       weight: ob1.weight * 3,
+      ob: {},
+      arr: [],
     });
-    //TODO write more tests
+    expect(ob.mapValues(ob3, (x) => x*3)).to.deep.equal({
+      name: NaN,
+      feet: 15,
+      body: {
+        feet: {
+          toes: 6,
+        },
+      },
+      eyes: [{location: NaN, color: NaN}, {location: NaN, color: NaN}, 3,6],
+    });
     done();
   });
 
   it('should return an array with the correct mapped values', (done) => {
-    //expect(ob.clone(arr4)).to.deep.equal(arr4);
-    //TODO write more tests
+    expect(ob.mapValues([ob3, ob1], (x) => x*3)).to.deep.equal([{
+      name: NaN,
+      feet: 15,
+      body: {
+        feet: {
+          toes: 6,
+        },
+      },
+      eyes: [{location: NaN, color: NaN}, {location: NaN, color: NaN}, 3,6],
+    },{
+      name: ob1.name * 3,
+      age: ob1.age * 3,
+      weight: ob1.weight * 3,
+      ob: {},
+      arr: [],
+    }]);
     done();
   });
 });

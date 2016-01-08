@@ -210,7 +210,7 @@ let ob = {
       }
     }
 
-    // if a top level array, things need to be handled just a little bit differently
+    // if array, things need to be handled just a little bit differently
     if(isArray) {
       res = [];
       for(let keyChain of keyChains) {
@@ -253,7 +253,7 @@ let ob = {
       let keys = keyChain.split('.');
       for(let key of keys) {
         if(count === keys.length) {
-          tmp[key] = value;
+          tmp[key.replace('[]','')] = value;
         } else {
           let isArray = contains(key, '[]');
           if(isArray) {
@@ -459,13 +459,13 @@ let ob = {
    *
    * let x = {
    *  a: 1,
-   *  d: {f: 4}
+   *  d: {f: 4, g: [1,2,3]}
    * }
    *
    * ob.mapValues(x, (x) => x*3 )
    * // → {
    * // a: 3,
-   * // d: {f: 12}
+   * // d: {f: 12, g: [3,6,9]}
    * //}
    * @param {object|any[]} subject The object or array to compare to
    * @param {function} func The function to operate on each value
@@ -476,7 +476,9 @@ let ob = {
     let shallowSubject = makeFlattenedShallow(subject);
 
     for(let key of Object.keys(shallowSubject)) {
-      shallowSubject[key] = func(shallowSubject[key]);
+      if(type(shallowSubject[key]) !== 'object' && type(shallowSubject[key]) !== 'array') {
+        shallowSubject[key] = func(shallowSubject[key]);
+      }
     }
 
     return ob.expand(shallowSubject);
