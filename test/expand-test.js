@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import ob from '../src/objob';
 
 describe('expand', () => {
-  let ob1, ob2, ob3, ob4, ob5;
+  let ob1, ob2, ob3, ob4, ob5, ob6;
   let arr2, arr1, arr3, arr4;
 
   before((done) => {
@@ -51,6 +51,15 @@ describe('expand', () => {
       weight: 170,
     };
 
+    ob6 = {
+      name: 'Blog App Documentation',
+      description: 'This is the documentation for the blog app.',
+      paths: {
+        '/posts': {},
+        '/posts/:id': { content: '<h3>Details</h3><p>Some details about the posts/:id path. You could add whatever you want here.</p>' },
+      },
+    };
+
     arr1 = [3, 1];
     arr2 = [ob1, ob2];
     arr3 = [arr2, arr2];
@@ -64,6 +73,7 @@ describe('expand', () => {
     expect(ob.expand(ob.flatten(ob2))).to.deep.equal(ob2);
     expect(ob.expand(ob.flatten(ob4))).to.deep.equal(ob4);
     expect(ob.expand(ob.flatten(ob5))).to.deep.equal(ob5);
+    expect(ob.expand(ob.flatten(ob6))).to.deep.equal(ob6);
     expect(ob.expand(ob.flatten({tmp: arr4}))).to.deep.equal({tmp: arr4});
     done();
   });
