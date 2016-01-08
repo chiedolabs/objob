@@ -12,6 +12,7 @@ Ob Job includes the following functions and many more with every function being 
 * filter
 * flatten
 * keys
+* mapValues
 * merge
 * omit
 * pick
