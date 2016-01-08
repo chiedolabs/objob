@@ -415,7 +415,7 @@ let ob = {
    *   e: [undefined, 1, 2]
    * }
    *
-   * ob.filter(x)
+   * ob.filter(x, (x) => x !== undefined))
    * // → {
    * //  b: {
    * //    d: 2,
