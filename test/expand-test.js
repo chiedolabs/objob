@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import ob from '../src/objob';
 
 describe('expand', () => {
-  let ob1, ob2, ob3, ob4;
+  let ob1, ob2, ob3, ob4, ob5;
   let arr2, arr1, arr3, arr4;
 
   before((done) => {
@@ -44,6 +44,13 @@ describe('expand', () => {
       eyes: [{location: 'left', color: 'blue'}, {location: 'right', color: 'red'}],
     };
 
+    ob5 = {
+      name: 'Bob',
+      feet: 5,
+      age: {'bar': 100, 'foo':  [{},{bar: [1,{},[{cool: []}]]}]},
+      weight: 170,
+    };
+
     arr1 = [3, 1];
     arr2 = [ob1, ob2];
     arr3 = [arr2, arr2];
@@ -56,6 +63,7 @@ describe('expand', () => {
     expect(ob.expand(ob.flatten(ob3))).to.deep.equal(ob3);
     expect(ob.expand(ob.flatten(ob2))).to.deep.equal(ob2);
     expect(ob.expand(ob.flatten(ob4))).to.deep.equal(ob4);
+    expect(ob.expand(ob.flatten(ob5))).to.deep.equal(ob5);
     expect(ob.expand(ob.flatten({tmp: arr4}))).to.deep.equal({tmp: arr4});
     done();
   });

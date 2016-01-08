@@ -210,7 +210,7 @@ let ob = {
       }
     }
 
-    // if a top level array, things need to be handled just a little bit differently
+    // if array, things need to be handled just a little bit differently
     if(isArray) {
       res = [];
       for(let keyChain of keyChains) {
@@ -253,7 +253,7 @@ let ob = {
       let keys = keyChain.split('.');
       for(let key of keys) {
         if(count === keys.length) {
-          tmp[key] = value;
+          tmp[key.replace('[]','')] = value;
         } else {
           let isArray = contains(key, '[]');
           if(isArray) {
