@@ -1,3 +1,5 @@
+import type from 'type-of';
+
 /*
  *  Returns a shallow version of the shallow object to remove redundancy
  *  and simplify complex operations.
@@ -13,7 +15,11 @@ export let makeFlattenedShallow = (subject) => {
 
     for(let keyChain2 in subject){
       if(keyChain !== keyChain2 && keyChain2.indexOf(keyChain) === 0) {
-        shallow = true;
+        // also make sure that if the different still contains a period
+        // otherwise we could be dealing with similar keys like 'name' and 'names'
+        if(keyChain2.replace(keyChain).includes('.')) {
+          shallow = true;
+        }
       }
     }
 

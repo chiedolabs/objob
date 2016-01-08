@@ -12,6 +12,7 @@ describe('clone', () => {
       age: 22,
       weight: 170,
       ob: {},
+      ob2: {},
       arr: [],
     };
 
@@ -35,6 +36,7 @@ describe('clone', () => {
       age: ob1.age * 3,
       weight: ob1.weight * 3,
       ob: {},
+      ob2: {},
       arr: [],
     });
     expect(ob.mapValues(ob3, (x) => x*3)).to.deep.equal({
@@ -65,6 +67,7 @@ describe('clone', () => {
       age: ob1.age * 3,
       weight: ob1.weight * 3,
       ob: {},
+      ob2: {},
       arr: [],
     }]);
     done();
