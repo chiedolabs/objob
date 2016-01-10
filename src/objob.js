@@ -95,7 +95,9 @@ let ob = {
           updatedFlattened[key] = flattened[key];
         }
       } else {
-        if(key.startsWith(input) === false) {
+        let re = new RegExp(input+'\..*','g');
+        let re2 = new RegExp(input+'$','g');
+        if(!key.match(re) && !key.match(re2)) {
           updatedFlattened[key] = flattened[key];
         }
       }
