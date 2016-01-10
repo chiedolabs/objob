@@ -85,8 +85,8 @@ let ob = {
         let matchFound = false;
         for(let inputKey of input) {
           let re = new RegExp(inputKey+'\..*','g');
-          let re2 = new RegExp(inputKey+'$','g');
-          if(key.match(re) || key.match(re2)) {
+          if(key.match(re) || key === inputKey) {
+            console.log('Match found');
             matchFound = true;
           }
         }
@@ -96,8 +96,7 @@ let ob = {
         }
       } else {
         let re = new RegExp(input+'\..*','g');
-        let re2 = new RegExp(input+'$','g');
-        if(!key.match(re) && !key.match(re2)) {
+        if(!key.match(re) && key !== input) {
           updatedFlattened[key] = flattened[key];
         }
       }
@@ -569,8 +568,7 @@ let ob = {
         for(let inputKey of input) {
 
           let re = new RegExp(inputKey+'\..*','g');
-          let re2 = new RegExp(inputKey+'$','g');
-          if(key.match(re) || key.match(re2)) {
+          if(key.match(re) || key === inputKey) {
             matchFound = true;
           }
         }
@@ -580,8 +578,7 @@ let ob = {
         }
       } else {
         let re = new RegExp(input+'\.','g');
-        let re2 = new RegExp(input+'$','g');
-        if(key.match(re) || key.match(re2)) {
+        if(key.match(re) || key === input) {
           updatedFlattened[key] = flattened[key];
         }
       }
