@@ -3,7 +3,7 @@
 import { expect } from 'chai';
 import { makeFlattenedShallow } from '../src/functions';
 
-describe('flatten', () => {
+describe('make flattened shallow', () => {
   let ob1;
 
   before((done) => {

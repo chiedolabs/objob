@@ -16,7 +16,7 @@ export let makeFlattenedShallow = (subject) => {
         // also make sure that if the different still contains a period
         // otherwise we could be dealing with similar keys like 'name' and 'names'
         let remainder = keyChain2.replace(keyChain);
-        if(remainder.includes('.') && remainder.split('.').length === 1) {
+        if(remainder.includes('.') && remainder.split('.').length === 2) {
           shallow = true;
         }
       }
