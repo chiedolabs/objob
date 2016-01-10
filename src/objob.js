@@ -73,36 +73,34 @@ let ob = {
    * //}
    *
    * @param {object|any[]} subject The object or array to perform the omit operation on.
-   * @param {string|string[]} keys The keys of the object or nested object that you would like to omit.
+   * @param {string|string[]} input The keys or key of the object or nested object that you would like to omit.
    * @returns {object|any[]} The object or array of objects without the omited keys
    */
-  omit: function(subject, keys = []){
-    subject = ob.clone(subject);
-    let subjectKeys = ob.keys(ob.flatten(subject));
-    let keysToKeep = [];
+  omit: function(subject, input = []){
+    let flattened = ob.flatten(subject);
+    let updatedFlattened = {};
 
-    for( let subjectKey of subjectKeys ) {
-      let keepKey = true;
-
-      if(type(keys) === 'array') {
-        for( let keyToRemove of keys ){
-          if(subjectKey === keyToRemove){
-            keepKey = false;
+    for(let key in flattened) {
+      if(type(input) === 'array') {
+        let matchFound = false;
+        for(let inputKey of input) {
+          let re = new RegExp(inputKey+'\..*','g');
+          let re2 = new RegExp(inputKey+'$','g');
+          if(key.match(re) || key.match(re2)) {
+            matchFound = true;
           }
         }
-      } else if(type(keys) === 'string') {
-        if(subjectKey === keys){
-          keepKey = false;
+
+        if(matchFound === false) {
+          updatedFlattened[key] = flattened[key];
+        }
+      } else {
+        if(key.startsWith(input) === false) {
+          updatedFlattened[key] = flattened[key];
         }
       }
-
-      if(keepKey){
-        keysToKeep.push(subjectKey);
-      }
-
     }
-
-    return ob.pick(subject, keysToKeep);
+    return ob.expand(updatedFlattened);
   },
   /**
    * Returns true if two objects or arrays have the same contents as one another.
@@ -556,32 +554,37 @@ let ob = {
    * // → {d: {e: 4, f: [5]}, g: [8]}
    *
    * @param {object|any[]} subject The object or array of objects to perform the pick operation on
-   * @param {string|string[]} keys The keys you would like to pick
+   * @param {string|string[]} input The keys or key you would like to pick
    * @returns {object|any[]} The object or array of objects with only the picked keys.
    */
-  pick: (subject, keys = []) => {
-    subject = ob.clone(subject);
-    let resp;
+  pick: (subject, input = []) => {
+    let flattened = ob.flatten(subject);
+    let updatedFlattened = {};
 
-    resp = {};
+    for(let key in flattened) {
+      if(type(input) === 'array') {
+        let matchFound = false;
+        for(let inputKey of input) {
 
-    let flat = ob.flatten(subject);
-
-    for (let actualKey in flat){
-      if(type(keys) === 'array') {
-        for (let desiredKey of keys){
-          if(actualKey === desiredKey) {
-            resp[actualKey] = flat[actualKey];
+          let re = new RegExp(inputKey+'\..*','g');
+          let re2 = new RegExp(inputKey+'$','g');
+          if(key.match(re) || key.match(re2)) {
+            matchFound = true;
           }
         }
-      } else if(type(keys) === 'string') {
-        if(actualKey === keys) {
-          resp[actualKey] = flat[actualKey];
+
+        if(matchFound === true) {
+          updatedFlattened[key] = flattened[key];
+        }
+      } else {
+        let re = new RegExp(input+'\.','g');
+        let re2 = new RegExp(input+'$','g');
+        if(key.match(re) || key.match(re2)) {
+          updatedFlattened[key] = flattened[key];
         }
       }
     }
-
-    return ob.expand(resp);
+    return ob.expand(updatedFlattened);
   },
   /**
    * Returns all values for a given object or array recursively.
