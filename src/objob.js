@@ -84,7 +84,8 @@ let ob = {
       if(type(input) === 'array') {
         let matchFound = false;
         for(let inputKey of input) {
-          if(key.startsWith(inputKey)) {
+          let re = new RegExp(inputKey+'\..*','g');
+          if(key.match(re) || key === inputKey) {
             matchFound = true;
           }
         }
@@ -93,7 +94,8 @@ let ob = {
           updatedFlattened[key] = flattened[key];
         }
       } else {
-        if(key.startsWith(input) === false) {
+        let re = new RegExp(input+'\..*','g');
+        if(!key.match(re) && key !== input) {
           updatedFlattened[key] = flattened[key];
         }
       }
@@ -563,7 +565,8 @@ let ob = {
       if(type(input) === 'array') {
         let matchFound = false;
         for(let inputKey of input) {
-          if(key.startsWith(inputKey)) {
+          let re = new RegExp(inputKey+'\..*','g');
+          if(key.match(re) || key === inputKey) {
             matchFound = true;
           }
         }
@@ -572,7 +575,8 @@ let ob = {
           updatedFlattened[key] = flattened[key];
         }
       } else {
-        if(key.startsWith(input) === true) {
+        let re = new RegExp(input+'\.','g');
+        if(key.match(re) || key === input) {
           updatedFlattened[key] = flattened[key];
         }
       }
