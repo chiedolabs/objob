@@ -77,6 +77,7 @@ let ob = {
    * @returns {object|any[]} The object or array of objects without the omited keys
    */
   omit: function(subject, input = []){
+    subject = ob.clone(subject);
     let flattened = ob.flatten(subject);
     let updatedFlattened = {};
 
@@ -558,6 +559,7 @@ let ob = {
    * @returns {object|any[]} The object or array of objects with only the picked keys.
    */
   pick: (subject, input = []) => {
+    subject = ob.clone(subject);
     let flattened = ob.flatten(subject);
     let updatedFlattened = {};
 
