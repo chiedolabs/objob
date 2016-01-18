@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import ob from '../src/objob';
 
 describe('pick', () => {
-  let ob1, ob2, ob3;
+  let ob1, ob2, ob3, ob4;
   let arr2;
 
   before((done) => {
@@ -32,6 +32,12 @@ describe('pick', () => {
       eyes: [{location: 'left', color: 'blue'}, {location: 'right', color: 'red'}],
     };
 
+    ob4 = {
+      id: 'Bob',
+      sub_id: 5,
+      sub_id_id: 100,
+    };
+
     arr2 = [ob1, ob2];
 
     done();
@@ -43,6 +49,8 @@ describe('pick', () => {
     expect(ob.pick(ob3, ['eyes[].0.location'])).to.deep.equal({
       eyes: [{location: 'left'}],
     });
+    expect(ob.pick(ob4,['id'])).to.deep.equal({id: ob4.id});
+    expect(ob.pick(ob4,['sub_id'])).to.deep.equal({sub_id: ob4.sub_id});
     done();
   });
 
