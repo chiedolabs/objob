@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import ob from '../src/objob';
 
 describe('omit', () => {
-  let ob1, ob2, ob3, ob4;
+  let ob1, ob2, ob3, ob4, ob5;
   let arr2;
 
   before((done) => {
@@ -47,6 +47,12 @@ describe('omit', () => {
       'date_modified': { description: 'Date modified', example: '2015-10-31T14:47:18.000Z'},
     };
 
+    ob5 = {
+      'my_key': 'foo',
+      'keeper': 'bar',
+      'my_key_keeper': 'baz',
+    };
+
     arr2 = [ob1, ob2];
 
     done();
@@ -68,6 +74,8 @@ describe('omit', () => {
       },
       eyes: [{color: 'blue'}, ob3.eyes[1]],
     });
+
+    expect(ob.omit(ob5, ['my_key'])).to.deep.equal({my_key_keeper: ob5.my_key_keeper, keeper: ob5.keeper});
     done();
   });
 
