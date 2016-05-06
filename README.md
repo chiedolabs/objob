@@ -2,6 +2,8 @@
 
 A library of deep/recursive utilities for nested objects.
 
+After usage in beta, objob is not efficient at all. It's useful for some small cases but overall, meh...
+
 Many functions will be similar to the object functions in lodash but will be deep/recursive versions.
 
 Ob Job includes the following functions and many more with every function being a deep/recursive implementation:

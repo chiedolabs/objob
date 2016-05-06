@@ -2,6 +2,8 @@
 
 Ob Job is a library of deep/recursive utilities for nested objects. Many functions will be similar to the object functions in lodash but will be deep/recursive versions.
 
+After usage in beta, objob is not efficient at all. It's useful for some small cases but overall, meh...
+
 ### Reserved Characters.
 *Note that deep operations will not work if any of your object's keys contain <code>.</code> or <code>[]</code>. With Objob, <code>.</code> and <code>[]</code> are reserved for the flat notation of the objects.*
 
